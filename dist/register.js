@@ -1,4 +1,4 @@
-$("#register-button").on("click", (event) => {
+$("#register-button").on("click", async (event) => {
   console.log("check");
 
   let email = $("#email").val();
@@ -10,8 +10,8 @@ $("#register-button").on("click", (event) => {
       email: $("#email").val(),
       password: $("#password").val(),
     };
-    createUser(user);
-    $("register-form").trigger("submit")
+    await createUser(user);
+    //$("#register-form").submit()
     console.log("all good");
   } else {
     console.log("something went wrong");
