@@ -38,7 +38,7 @@ const comparePasswords = (p1, p2) => {
 };
 
 const createUser = async (user) => {
-  await fetch("http://localhost:8080" + "/user", {
+  await fetch("http://localhost:8080" + "/register", {
     method: 'POST',
     body: JSON.stringify({ email: user.email, password: user.password }),
     headers: {
