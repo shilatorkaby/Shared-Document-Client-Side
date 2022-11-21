@@ -2,10 +2,9 @@ $("#register-button").on("click", async (event) => {
 
   let email = $("#email").val()
   let password = $("#password").val()
-  let passwordRepeat = $("#password-repeat").val()
 
   // validatePassword(password) &&
-  if ( validateEmail(email) && comparePasswords(password, passwordRepeat)) {
+  if ( validateEmail(email) && comparePasswords(password)) {
     const user = {
       email: $("#email").val(),
       password: $("#password").val(),
