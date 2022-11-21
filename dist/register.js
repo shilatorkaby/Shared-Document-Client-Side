@@ -1,7 +1,4 @@
 $("#register-button").on("click", async (event) => {
-  console.log("check");
-
-  event.preventDefault()
 
   let email = $("#email").val()
   let password = $("#password").val()
@@ -13,6 +10,9 @@ $("#register-button").on("click", async (event) => {
       email: $("#email").val(),
       password: $("#password").val(),
     };
+
+    console.log(user);
+
     await createUser(user);
     $("#register-form").submit()
   } else {
@@ -28,7 +28,7 @@ const validateEmail = (email) => {
 
 const validatePassword = (password) => {
   // /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/
-  return /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(password)
+  return /^\\w{5,10}$/.test(password)
     ? true
     : false;
 };
@@ -38,11 +38,11 @@ const comparePasswords = (p1, p2) => {
 };
 
 const createUser = async (user) => {
-  await fetch("http://localhost:8080" + "/register", {
+  await fetch("http://localhost:8080" + "/auth/register", {
     method: 'POST',
-    body: JSON.stringify({ email: user.email, password: user.password }),
     headers: {
-      'Content-Type': 'application/json'
-    }
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email: user.email, password: user.password })
   })
 }
