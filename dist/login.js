@@ -3,13 +3,17 @@ $("#login-button").on("click", (event) => {
   
     let email = $("#email").val();
     let password = $("#password").val();
+
+    console.log(email + " " + password);
+
+    console.log(validateEmail(email) + " " + validatePassword(password));
   
     if ( validateEmail(email) && validatePassword(password)) {
       const user = {
         email: $("#email").val(),
         password: $("#password").val(),
       };
-      createUser(user);
+      loginUser(user);
       $("register-form").trigger("submit")
       console.log("all good");
     } else {
@@ -24,14 +28,15 @@ $("#login-button").on("click", (event) => {
   };
   
   const validatePassword = (password) => {
-    // /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/
-    return /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(password)
-      ? true
-      : false;
+    // // /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/
+    // return /^\\w{5,10}$/.test(password)
+    //   ? true
+    //   : false;
+    return true
   };
 
-  const createUser = (user) => {
-    fetch("http://localhost:8080" + "/user", {
+  const loginUser = (user) => {
+    fetch("http://localhost:8080" + "/auth/login", {
       method: 'POST',
       body: JSON.stringify({ email: user.email, password: user.password }),
       headers: {
