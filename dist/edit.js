@@ -43,8 +43,6 @@ showCode.addEventListener('click', function () {
 	}
 })
 
-
-
 var fileName = null;
 
 function fileHandle(value) {
