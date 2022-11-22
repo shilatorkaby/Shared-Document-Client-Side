@@ -22,7 +22,10 @@ li {
 a {
 	cursor: pointer;
 }
+.header{
+	top: 5px;
 
+}
 .container {
 	max-width: 991px;
 	width: 100%;
@@ -30,6 +33,7 @@ a {
 	border-radius: 8px;
 	overflow: hidden;
 }
+
 .toolbar {
 	padding: 16px;
 	background: #eee;
@@ -51,6 +55,8 @@ a {
 	background: #fff;
 	border: 2px solid #ddd;
 	border-radius: 6px;
+	font-size: 14px;
+	align-items: center;
 	outline: none;
 	cursor: pointer;
 }
@@ -74,6 +80,7 @@ a {
 	padding: 0;
 	width: 26px;
 	height: 26px;
+	font-size: 14px;
 	background: #fff;
 	cursor: pointer;
 }
@@ -81,6 +88,7 @@ a {
 	width: 20px;
 	height: 20px;
 	border: none;
+	font-size: 14px;
 	border-radius: 50%;
 }
 .toolbar .btn-toolbar {
@@ -89,14 +97,16 @@ a {
 	align-items: center;
 	grid-gap: 10px;
 }
-.toolbar .btn-toolbar-newFile select{
+.toolbar .btn-toolbar-newFile {
     background: rgb(255, 255, 255);
 	border: 2px solid #ddd;
 	border-radius: 6px;
 	cursor: pointer;
-    text-align: center;
+	width: 100px;
+	height: 30px;
+	text-align: center;
 	display: flex;
-    font-size: small;
+    font-size: 14px;
 	align-items: center;
 	justify-content: center;	
 }
@@ -119,13 +129,42 @@ a {
 #content {
 	/* padding: 200px; */
     width: 100%;
-    padding: 20px 100px 500px 100px;
+    padding: 20px 90px 500px 30px;
     margin: 0px 0;
     box-sizing:border-box;
 	outline: none;
 	max-height: 100vh;
 	overflow: auto;
+	left: 50%;
+
 }
 #show-code[data-active="true"] {
 	background: #eee;
 }
+
+[contentEditable=true]:empty:not(:focus):before {
+	content: attr(data-text);
+	color: rgb(160, 160, 160);
+	font-size: small;
+  }
+
+
+
+  .btn-save {
+    background: rgb(41, 200, 228);
+	border: 2px solid #ddd;
+	cursor: pointer;
+	width: 100px;
+	height: 30px;
+	text-align: center;
+	display: flex;
+    font-size: 12px;
+	font-weight: bold;
+	align-items: center;
+	margin: 4px 2px;
+	transition-duration: 0.4s;
+	justify-content: center;
+	position:absolute;
+	left: 50%;
+}
+

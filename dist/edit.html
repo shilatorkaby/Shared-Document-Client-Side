@@ -8,8 +8,9 @@
 	<title>Text Editor</title>
 </head>
 <body>
-
 	<div class="container">
+		<h1 class="header" id="demo"></h1>
+
 		<!-- <input type="text" placeholder="Filename" value="File Name" id="filename"> -->
 		<div class="toolbar">
 			<div class="head">
@@ -46,13 +47,9 @@
 					<span>Background</span>
 					<input type="color" oninput="formatDoc('hiliteColor', this.value); this.value='#000000';">
 				</div>
-					<div class="btn-toolbar-newFile">
-						<select onchange="fileHandle(this.value); this.selectedIndex=0">
-						<option value="" selected="" hidden="" disabled="">Create</option>
-						<option value="new">New File</option>
-						</select>			
-					</div>
+				<button class="btn-toolbar-newFile" id="newfile" onclick="addNewFile()"; >New File</button>
 				</div>
+
 			<div class="btn-toolbar">
 				<button onclick="formatDoc('undo')"><i class='bx bx-undo' ></i></button>
 				<button onclick="formatDoc('redo')"><i class='bx bx-redo' ></i></button>
@@ -71,11 +68,9 @@
 				<button id="show-code" data-active="false">&lt;/&gt;</button>
 			</div>
 		</div>
-		<div id="content" contenteditable="true" spellcheck="false" alig>
-			Lorem, ipsum.
-		</div>
-	</div>
-	
+		<div id="content" data-text = "Hey this is your new file.. put your text here" contenteditable="true" spellcheck="false" alig></div>
+		<button class="btn-save" id="save" onclick="saveChanges()"; >Save Changes</button>
+</div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="edit.js"></script>
 </body>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Embedded Style Sheet</title>
+
+        <link href="style.css" rel="stylesheet">
+    </head>
+   <body>
+      <style>
+         p {
+         color: rgb(102, 0, 128);
+         }
+         .button {
+            color: rgb(8, 56, 88);
+            background-color: rgb(51, 69, 224);
+            color: rgb(227, 235, 236);
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 16px;
+        }
+        textarea {
+            size: 30px;
+        resize: 30;
+        }
+
+      </style>
+          <p>
+          text from test.txt file:
+        <p>
+        <!-- <embed src="test.txt"> -->
+        <script>
+            function textAreaAdjust(element) {
+                element.style.height = "1px";
+                element.style.height = (25+element.scrollHeight)+"px";
+              }
+        </script>
+
+        <textarea id= "text"  onkeyup="textAreaAdjust(this)" style="overflow:hidden" placeholder="Start typing here..."></textarea>
+
+         <br/>
+         <input class="button" type="button" id="btn"
+                value="Export file" />
+         <script>
+            function download(file, text) {
+             
+                //creating an invisible element
+                var element = document.createElement('a');
+                element.setAttribute('href',
+                'data:text/plain;charset=utf-8, '
+                + encodeURIComponent(text));
+                element.setAttribute('download', file);
+             
+                // Above code is equivalent to
+                // <a href="path of file" download="file name">
+             
+                document.body.appendChild(element);
+             
+                //onClick property
+                element.click();
+             
+                document.body.removeChild(element);
+            }
+             
+            // Start file download.
+            document.getElementById("btn")
+            .addEventListener("click", function() {
+                // Generate download of hello.txt
+                // file with some content
+                var text = document.getElementById("text").value;
+                var filename = "textName.txt";
+             
+                download(filename, text);
+            }, false);
+         </script>
+   </body>
+</html>
