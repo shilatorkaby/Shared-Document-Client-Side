@@ -10,8 +10,9 @@
 <body>
 	<div class="container">
 		<h1 class="header" id="demo"></h1>
+		<p class= "Paragraph" id="text"></p>
 
-		<!-- <input type="text" placeholder="Filename" value="File Name" id="filename"> -->
+
 		<div class="toolbar">
 			<div class="head">
 				<select onchange="fileHandle(this.value); this.selectedIndex=0">
@@ -48,6 +49,12 @@
 					<input type="color" oninput="formatDoc('hiliteColor', this.value); this.value='#000000';">
 				</div>
 				<button class="btn-toolbar-newFile" id="newfile" onclick="addNewFile()"; >New File</button>
+				<form method="post" enctype="multipart/form-data"></form>
+				<tr>
+				<input type="file"	id="impotedText" style="display:none">
+				<button class="btn-toolbar-newFile" onclick="importTextFromFile()">Import File</button>
+				</tr>
+			</form>
 				</div>
 
 			<div class="btn-toolbar">
