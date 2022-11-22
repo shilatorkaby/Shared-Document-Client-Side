@@ -6,14 +6,13 @@ body{
 	align-items: center;
 	min-height: 100vh;
 	font-family: 'Jost', sans-serif;
-	background: linear-gradient(to bottom, #133b4a, #b3b5c6, #294756);
+	background-color: #E1E8EE;
 }
 .main{
 	width: 350px;
 	height: 500px;
-	background: red;
+	background-color: #c5d5e3;
 	overflow: hidden;
-	background: url("https://doc-08-2c-docs.googleusercontent.com/docs/securesc/68c90smiglihng9534mvqmq1946dmis5/fo0picsp1nhiucmc0l25s29respgpr4j/1631524275000/03522360960922298374/03522360960922298374/1Sx0jhdpEpnNIydS4rnN4kHSJtU1EyWka?e=view&authuser=0&nonce=gcrocepgbb17m&user=03522360960922298374&hash=tfhgbs86ka6divo3llbvp93mg4csvb38") no-repeat center/ cover;
 	border-radius: 10px;
 	box-shadow: 5px 20px 50px #000;
 }
@@ -26,7 +25,7 @@ body{
 	height: 100%;
 }
 label{
-	color: #fff;
+	color: rgb(25, 18, 64);
 	font-size: 2.3em;
 	justify-content: center;
 	display: flex;
@@ -75,7 +74,7 @@ button:hover{
 	transition: .8s ease-in-out;
 }
 .login label{
-	color: #0a4957;
+	color: rgb(25, 18, 64);
 	transform: scale(.6);
 }
 
