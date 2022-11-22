@@ -45,20 +45,41 @@ showCode.addEventListener('click', function () {
 
 
 
-const filename = document.getElementById('filename');
+var fileName = null;
 
 function fileHandle(value) {
-	if(value === 'new') {
-		content.innerHTML = '';
-		filename.value = 'untitled';
-	} else if(value === 'txt') {
+	if(fileName != null)
+	{
+	if(value === 'txt') {
 		const blob = new Blob([content.innerText])
 		const url = URL.createObjectURL(blob)
 		const link = document.createElement('a');
 		link.href = url;
-		link.download = `${filename.value}.txt`;
+		link.download = `${fileName}.txt`;
 		link.click();
 	} else if(value === 'pdf') {
-		html2pdf(content).save(filename.value);
+		html2pdf(content).save(fileName);
 	}
 }
+}
+
+function addNewFile() {
+	fileName = prompt("Please enter the name of your new file", "");
+	content.innerHTML = '';
+	document.getElementById("demo").innerHTML = fileName;
+  	 //send the file name to intellij
+}
+
+function saveChanges() {
+	const blob = new Blob([content.innerText])
+	fetch("http://localhost:8080" + "/doc/save", {
+      method: 'POST',
+      body: JSON.stringify({fileName: fileName, fileContent: content.innerText}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+}
+
+
+
