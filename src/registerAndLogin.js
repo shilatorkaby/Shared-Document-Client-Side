@@ -3,6 +3,8 @@ $("#register-button").on("click", async (event) => {
   let email = $("#email").val()
   let password = $("#password").val()
 
+  console.log(email + " " + password);
+
   // validatePassword(password) &&
   if ( validateEmail(email) && comparePasswords(password)) {
     const user = {

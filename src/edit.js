@@ -1,3 +1,6 @@
+import 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap';
+
+
 function formatDoc(cmd, value=null) {
 	if(value) {
 		document.execCommand(cmd, false, value);
@@ -42,8 +45,6 @@ showCode.addEventListener('click', function () {
 		content.setAttribute('contenteditable', true);
 	}
 })
-
-
 
 var fileName = null;
 
