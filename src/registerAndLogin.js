@@ -1,6 +1,5 @@
 $("#register-button").on("click", async (event) => {
 
-  
   let email = $("#email").val()
   let password = $("#password").val()
 

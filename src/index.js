@@ -73,7 +73,7 @@ $( document ).ready(() => {
       title: "Edit | " + urlPageTitle,
       description: "This is the contact page",
     },
-    "/new-doc": {
+    "/new-document": {
       template: "templates/newDoc.html",
       title: "New Document | " + urlPageTitle,
       description: "This is the contact page",

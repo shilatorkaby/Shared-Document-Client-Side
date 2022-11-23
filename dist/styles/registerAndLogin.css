@@ -6,13 +6,17 @@ body{
 	align-items: center;
 	min-height: 100vh;
 	font-family: 'Jost', sans-serif;
-	background-color: #E1E8EE;
+	background: linear-gradient(to bottom, #9ab0b3, #a2cfdc, #daf0f6);
 }
 .main{
-	width: 350px;
-	height: 500px;
-	background-color: #c5d5e3;
-	overflow: hidden;
+	margin: auto;
+	margin-top: 100px;
+  	margin-bottom: 100px;
+  	margin-right: 40px;
+  	margin-left: 33%;
+	width: 390px;
+	height: 510px;
+	background: url("https://doc-08-2c-docs.googleusercontent.com/docs/securesc/68c90smiglihng9534mvqmq1946dmis5/fo0picsp1nhiucmc0l25s29respgpr4j/1631524275000/03522360960922298374/03522360960922298374/1Sx0jhdpEpnNIydS4rnN4kHSJtU1EyWka?e=view&authuser=0&nonce=gcrocepgbb17m&user=03522360960922298374&hash=tfhgbs86ka6divo3llbvp93mg4csvb38") no-repeat center/ cover;	overflow: hidden;
 	border-radius: 10px;
 	box-shadow: 5px 20px 50px #000;
 }
@@ -21,27 +25,28 @@ body{
 }
 .signup{
 	position: relative;
+	margin: auto;
 	width:100%;
 	height: 100%;
 }
 label{
-	color: rgb(25, 18, 64);
-	font-size: 2.3em;
+	color: rgb(8, 74, 91);
+	font-size: 2.5em;
 	justify-content: center;
 	display: flex;
-	margin: 60px;
-	font-weight: bold;
+	margin: 60px 0px 0px auto;
+	font-weight: bolder;
 	cursor: pointer;
 	transition: .5s ease-in-out;
 }
+
 input{
-	width: 60%;
-	height: 20px;
+	width: 70%;
+	height: 50px;
 	background: #e0dede;
 	justify-content: center;
 	display: flex;
-	margin: 20px auto;
-	padding: 10px;
+	margin: 50px auto auto auto;
 	border: none;
 	outline: none;
 	border-radius: 5px;
@@ -49,23 +54,19 @@ input{
 button{
 	width: 60%;
 	height: 40px;
-	margin: 10px auto;
+	margin: auto;
+	margin-top: 50px;
 	justify-content: center;
 	display: block;
-	color: #fff;
-	background: #083f6a;
 	font-size: 1em;
 	font-weight: bold;
-	margin-top: 20px;
 	outline: none;
 	border: none;
 	border-radius: 5px;
 	transition: .2s ease-in;
 	cursor: pointer;
 }
-button:hover{
-	background: #2988a2;
-}
+
 .login{
 	height: 460px;
 	background: #eee;
@@ -73,9 +74,23 @@ button:hover{
 	transform: translateY(-180px);
 	transition: .8s ease-in-out;
 }
+.signup button{
+	background: #08556a;
+	color: rgb(255, 255, 255);
+}
+.signup button:hover{
+	background: #2988a2;
+}
+.login button{
+	background: #08556a;
+	color: #fff;
+}
+.login button:hover{
+	background: #2988a2;
+}
 .login label{
-	color: rgb(25, 18, 64);
-	transform: scale(.6);
+	color: #3491ab;
+	transform: scale(.5);
 }
 
 #chk:checked ~ .login{
@@ -85,5 +100,5 @@ button:hover{
 	transform: scale(1);	
 }
 #chk:checked ~ .signup label{
-	transform: scale(.6);
+	transform: scale(.4);
 }
