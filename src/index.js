@@ -1,9 +1,9 @@
-import $ from 'jquery'
+import $ from "jquery";
 
-import { createUser } from './rest';
-import { openConnection } from './sockets';
-import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { createUser } from "./rest";
+import { openConnection } from "./sockets";
+import "bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 // import "../styles/registerAndLogin.css"
 // import "../styles/edit.css"
@@ -12,7 +12,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 // import "../styles/newDoc.css"
 
 // $(() => {
-
 
 //   $(document).on('submit', () => {
 //     const user = {
@@ -23,12 +22,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //     createUser(user);
 //   })
 
-
-  
 // })
 // openConnection();
 
-$( document ).ready(() => {
+//============================ start router ===========================
+
+$(document).ready(() => {
   const urlPageTitle = "JS Single Page Application Router";
 
   // create document click that watches the nav links only
@@ -102,7 +101,9 @@ $( document ).ready(() => {
 
     console.log(route);
 
-    const html = await fetch(route.template).then((response) => response.text());
+    const html = await fetch(route.template).then((response) =>
+      response.text()
+    );
     // set the content of the content div to the html
     document.getElementById("content").innerHTML = html;
     // set the title of the document to the title of the route
@@ -119,4 +120,79 @@ $( document ).ready(() => {
   window.route = urlRoute;
   // call the urlLocationHandler function to handle the initial url
   urlLocationHandler();
+
+  //============================ end router =============================
+
+  //========================== start register ============================
+
+  $(document).on("click", "#register-button", () => {
+    const user = {
+      email: $("#register-email").val(),
+      password: $("#register-password").val()
+    };
+
+    fetch("http://localhost:8080" + "/auth/register", {
+      method: "POST",
+      body: JSON.stringify({ email: user.email, password: user.password }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  });
+
+  $(document).on("click", "#login-button", () => {
+    const user = {
+          email: $("#login-email").val(),
+          password: $("#login-password").val()
+        };
+
+
+    fetch("http://localhost:8080" + "/auth/login", {
+      method: "POST",
+      body: JSON.stringify({ email: user.email, password: user.password }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  });
+
+  // console.log(email + " " + password);
+
+  // console.log(validateEmail(email) + " " + validatePassword(password));
+
+  // if ( validateEmail(email) && validatePassword(password)) {
+  //   const user = {
+  //     email: $("#email").val(),
+  //     password: $("#password").val(),
+  //   };
+  //   loginUser(user);
+  //   $("register-form").trigger("submit")
+  //   console.log("all good");
+  // } else {
+  //   console.log("something went wrong");
+  // }
+
+  const validateEmail = (email) => {
+    return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
+      ? true
+      : false;
+  };
+
+  const validatePassword = (password) => {
+    // // /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/
+    // return /^\\w{5,10}$/.test(password)
+    //   ? true
+    //   : false;
+    return true;
+  };
+
+  const loginUser = (user) => {
+    fetch("http://localhost:8080" + "/auth/login", {
+      method: "POST",
+      body: JSON.stringify({ email: user.email, password: user.password }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
 });
