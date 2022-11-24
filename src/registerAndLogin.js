@@ -45,5 +45,7 @@ const createUser = async (user) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ email: user.email, password: user.password })
-  })
+  });
 }
+
+

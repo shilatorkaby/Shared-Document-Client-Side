@@ -137,7 +137,7 @@ $(document).ready(() => {
       headers: {
         "Content-Type": "application/json",
       },
-    });
+    }).then(response => alreadyReg(response));
   });
 
   $(document).on("click", "#login-button", () => {
@@ -193,6 +193,18 @@ $(document).ready(() => {
       headers: {
         "Content-Type": "application/json",
       },
-    });
-  };
-});
+    })
+    }
+  });
+
+
+function alreadyReg(response) {
+  console.log(response.status)
+ if (response.status == 200){
+    document.getElementById("demo").innerHTML = "Verification email send to your inbox"
+  }
+  else{
+    document.getElementById("demo").innerHTML = "User is already register! please log in"
+  }
+}
+
