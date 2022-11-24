@@ -1,28 +1,26 @@
 <link rel="stylesheet" type="text/css" href="../styles/registerAndLogin.css">
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
 
-<div class = "regMessage">
-  <p id="demo">gggggggggggggggggggggggg</p>
-</div>
-
 <div class="main">
   <input type="checkbox" id="chk" aria-hidden="true" />
   <div class="signup">
-    <form id="register-form" action="/" method="get">
+    <form id="register-form">
       <label for="chk" aria-hidden="true">Sign up</label>
       <input id="register-email" type="email" name="email" placeholder="Email" required="" />
       <input id="register-password" type="password" name="pswd" placeholder="Password" required="" />   
     </form>
+    <p id="register-alert"></p>
     <button id="register-button" type="click">Sign up</button>
   </div>
 
 
   <div class="login">
-    <form id="login-form" action="/">
+    <form id="login-form">
       <label for="chk" aria-hidden="true">Login</label>
       <input id="login-email" type="email" name="email" placeholder="Email" required="" />
       <input id="login-password" type="password" name="pswd" placeholder="Password" required="" />
     </form>
+    <p id="login-alert"></p>
     <button type="click" id="login-button" >Login</button>
   </div>
 </div>

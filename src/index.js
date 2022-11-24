@@ -25,7 +25,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // })
 // openConnection();
 
-//============================ start router ===========================
+let token;
+
+//============================== start router ============================
 
 $(document).ready(() => {
   const urlPageTitle = "JS Single Page Application Router";
@@ -121,14 +123,14 @@ $(document).ready(() => {
   // call the urlLocationHandler function to handle the initial url
   urlLocationHandler();
 
-  //============================ end router =============================
+  //============================ end router ==============================
 
   //========================== start register ============================
 
   $(document).on("click", "#register-button", () => {
     const user = {
       email: $("#register-email").val(),
-      password: $("#register-password").val()
+      password: $("#register-password").val(),
     };
 
     fetch("http://localhost:8080" + "/auth/register", {
@@ -137,40 +139,95 @@ $(document).ready(() => {
       headers: {
         "Content-Type": "application/json",
       },
-    }).then(response => alreadyReg(response));
+    }).then((response) => registerAlert(response));
   });
 
-  $(document).on("click", "#login-button", () => {
+  //=========================== end register =============================
+
+  //=========================== start login ==============================
+
+  $(document).on("click", "#login-button", async () => {
     const user = {
-          email: $("#login-email").val(),
-          password: $("#login-password").val()
-        };
+      email: $("#login-email").val(),
+      password: $("#login-password").val(),
+    };
 
-
+    // login
     fetch("http://localhost:8080" + "/auth/login", {
       method: "POST",
       body: JSON.stringify({ email: user.email, password: user.password }),
       headers: {
         "Content-Type": "application/json",
       },
-    });
+    })
+      .then((response) => response.json())
+      .then(async (data) => {
+        token = data.token;
+        window.history.pushState("", "", "/doc-home-screen");
+        await urlLocationHandler();
+      })
+      .then(() => {
+        // after login we fetch all the data about the specific user using the token
+        fetch("http://localhost:8080" + "/user/get/docs", {
+          method: "POST",
+          body: JSON.stringify({ token: token }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((documents) => {
+            for (const document of documents) {
+              console.log(document);
+              $("#documents").append( 
+              `<div>
+                <img src="https://www.computerhope.com/jargon/d/doc.png">
+                title: ${document.fileName} </br>
+                author: ${document.email}
+              </div>`)
+            }
+          });
+      });
+
+    // $("#content").load("docHomeScreen.html", () => {
+    //   for(const document of documents){
+    //     console.log(document);
+    //     $("#documents").innerHTML = `
+    //     <div>
+    //       <img src="https://www.computerhope.com/jargon/d/doc.png">
+    //       ${document.fileName}
+    //     </div>`
+    //   }
+
+    //=========================== end login ================================
+
+    //======================== start documents =============================
+
+    // then(response => {re
+    //   if(response.status == 200){
+    //     console.log(response.json()[token]);
+    //   }
+    //   else{
+    //     loginAlert(response)
+    //   }
+    // });
+
+    // console.log(email + " " + password);
+
+    // console.log(validateEmail(email) + " " + validatePassword(password));
+
+    // if ( validateEmail(email) && validatePassword(password)) {
+    //   const user = {
+    //     email: $("#email").val(),
+    //     password: $("#password").val(),
+    //   };
+    //   loginUser(user);
+    //   $("register-form").trigger("submit")
+    //   console.log("all good");
+    // } else {
+    //   console.log("something went wrong");
+    // }
   });
-
-  // console.log(email + " " + password);
-
-  // console.log(validateEmail(email) + " " + validatePassword(password));
-
-  // if ( validateEmail(email) && validatePassword(password)) {
-  //   const user = {
-  //     email: $("#email").val(),
-  //     password: $("#password").val(),
-  //   };
-  //   loginUser(user);
-  //   $("register-form").trigger("submit")
-  //   console.log("all good");
-  // } else {
-  //   console.log("something went wrong");
-  // }
 
   const validateEmail = (email) => {
     return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
@@ -193,18 +250,27 @@ $(document).ready(() => {
       headers: {
         "Content-Type": "application/json",
       },
-    })
-    }
-  });
+    });
+  };
+});
 
-
-function alreadyReg(response) {
-  console.log(response.status)
- if (response.status == 200){
-    document.getElementById("demo").innerHTML = "Verification email send to your inbox"
-  }
-  else{
-    document.getElementById("demo").innerHTML = "User is already register! please log in"
+function registerAlert(response) {
+  console.log(response.status);
+  if (response.status == 200) {
+    document.getElementById("register-alert").innerHTML =
+      "Verification email has sent to your inbox";
+  } else {
+    document.getElementById("register-alert").innerHTML =
+      "User is already registered! please log in";
   }
 }
 
+function loginAlert(response) {
+  if (response.status == 200) {
+    document.getElementById("login-alert").innerHTML =
+      "Verification email has sent to your inbox";
+  } else {
+    document.getElementById("login-alert").innerHTML =
+      "User is already registered! please log in";
+  }
+}
