@@ -26,6 +26,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // openConnection();
 
 let token;
+let documentId;
 
 //============================== start router ============================
 
@@ -101,13 +102,109 @@ $(document).ready(() => {
     const route = urlRoutes[location] || urlRoutes["404"];
     // get the html from the template
 
-    console.log(route);
+    console.log(route.template);
 
     const html = await fetch(route.template).then((response) =>
       response.text()
     );
     // set the content of the content div to the html
     document.getElementById("content").innerHTML = html;
+
+    switch (route.template) {
+      //========================== start register ============================
+      case "templates/registerAndLogin.html":
+      
+        $(document).on("click", "#register-button", async () => {
+          const user = {
+            email: $("#register-email").val(),
+            password: $("#register-password").val(),
+          };
+      
+          fetch("http://localhost:8080" + "/auth/register", {
+            method: "POST",
+            body: JSON.stringify({ email: user.email, password: user.password }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }).then((response) => registerAlert(response));
+        });
+
+      //=========================== end register =============================
+
+      //=========================== start login ==============================
+
+        $(document).on("click", "#login-button", async () => {
+          const user = {
+            email: $("#login-email").val(),
+            password: $("#login-password").val(),
+          };
+
+          fetch("http://localhost:8080" + "/auth/login", {
+            method: "POST",
+            body: JSON.stringify({ email: user.email, password: user.password }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((response) => {
+              if (response.status == 200) {
+                return response.json();
+              }
+              return null;
+            })
+            .then(async (data) => {
+              if (data != null) {
+                token = data.token;
+                window.history.pushState({}, "", "/doc-home-screen");
+                await urlLocationHandler();
+              }
+            });
+        });
+      break
+      //=========================== end login =================================
+
+      //========================= start documents =============================
+      case "templates/docHomeScreen.html":
+        
+        fetch("http://localhost:8080" + "/user/get/docs", {
+          method: "POST",
+          body: JSON.stringify({ token: token }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((documents) => {
+            for (const document of documents) {
+              console.log(document);
+              $("#documents").append(
+                `<div>
+                  <img src="https://www.computerhope.com/jargon/d/doc.png"></br>
+                  <b>Title</b>: ${document.fileName} </br>
+                  <b>Author</b>: ${document.email} </br>
+                  <button id="edit-${document.id}" class="btn btn-success"> Edit </button>
+                  <button id="delete-${document.id}" class="btn btn-danger"> Delete </button>
+                </div>`
+              );
+
+              $(`#edit-${document.id}`).on("click", async () => {
+                window.history.pushState({}, "", `/edit`);
+                documentId = document.id;
+                await urlLocationHandler();
+              });
+
+              $(`#delete-${document.id}`).on("click", async () => {
+                // delete document
+              });
+            }
+          });
+        break
+        //========================== end documents ============================
+
+      default:
+        console.log(`Sorry, we are out of ${route.template}.`);
+    }
+
     // set the title of the document to the title of the route
     document.title = route.title;
     // set the description of the document to the description of the route
@@ -125,123 +222,6 @@ $(document).ready(() => {
 
   //============================ end router ==============================
 
-  //========================== start register ============================
-
-  $(document).on("click", "#register-button", () => {
-    const user = {
-      email: $("#register-email").val(),
-      password: $("#register-password").val(),
-    };
-
-    fetch("http://localhost:8080" + "/auth/register", {
-      method: "POST",
-      body: JSON.stringify({ email: user.email, password: user.password }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((response) => registerAlert(response));
-  });
-
-  //=========================== end register =============================
-
-  //=========================== start login ==============================
-
-  $(document).on("click", "#login-button", async () => {
-    const user = {
-      email: $("#login-email").val(),
-      password: $("#login-password").val(),
-    };
-
-    // login
-    fetch("http://localhost:8080" + "/auth/login", {
-      method: "POST",
-      body: JSON.stringify({ email: user.email, password: user.password }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then(async (data) => {
-        token = data.token;
-        window.history.pushState("", "", "/doc-home-screen");
-        await urlLocationHandler();
-      })
-      .then(() => {
-        // after login we fetch all the data about the specific user using the token
-        fetch("http://localhost:8080" + "/user/get/docs", {
-          method: "POST",
-          body: JSON.stringify({ token: token }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-          .then((response) => response.json())
-          .then((documents) => {
-            for (const document of documents) {
-              console.log(document);
-              $("#documents").append( 
-              `<div>
-                <img src="https://www.computerhope.com/jargon/d/doc.png">
-                title: ${document.fileName} </br>
-                author: ${document.email}
-              </div>`)
-            }
-          });
-      });
-
-    // $("#content").load("docHomeScreen.html", () => {
-    //   for(const document of documents){
-    //     console.log(document);
-    //     $("#documents").innerHTML = `
-    //     <div>
-    //       <img src="https://www.computerhope.com/jargon/d/doc.png">
-    //       ${document.fileName}
-    //     </div>`
-    //   }
-
-    //=========================== end login ================================
-
-    //======================== start documents =============================
-
-    // then(response => {re
-    //   if(response.status == 200){
-    //     console.log(response.json()[token]);
-    //   }
-    //   else{
-    //     loginAlert(response)
-    //   }
-    // });
-
-    // console.log(email + " " + password);
-
-    // console.log(validateEmail(email) + " " + validatePassword(password));
-
-    // if ( validateEmail(email) && validatePassword(password)) {
-    //   const user = {
-    //     email: $("#email").val(),
-    //     password: $("#password").val(),
-    //   };
-    //   loginUser(user);
-    //   $("register-form").trigger("submit")
-    //   console.log("all good");
-    // } else {
-    //   console.log("something went wrong");
-    // }
-  });
-
-  const validateEmail = (email) => {
-    return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
-      ? true
-      : false;
-  };
-
-  const validatePassword = (password) => {
-    // // /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/
-    // return /^\\w{5,10}$/.test(password)
-    //   ? true
-    //   : false;
-    return true;
-  };
 
   const loginUser = (user) => {
     fetch("http://localhost:8080" + "/auth/login", {
