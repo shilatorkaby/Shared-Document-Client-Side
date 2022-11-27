@@ -94,7 +94,7 @@ button{
 }
 
 #chk:checked ~ .login{
-	transform: translateY(-500px);
+	transform: translateY(-550px);
 }
 #chk:checked ~ .login label{
 	transform: scale(1);	
