@@ -39,9 +39,13 @@
         <span>Background</span>
         <input type="color" oninput="formatDoc('hiliteColor', this.value); this.value='#000000';" />
       </div>
-      <!-- <button class="btn-toolbar-newFile" id="newfile" onclick="addNewFile()" ;>
-        New File
-      </button> -->
+      <button class="btn-toolbar-newFile" id="newfile" onclick="addNewFile()"; >New File</button>
+      <form method="post" enctype="multipart/form-data"></form>
+      <tr>
+      <input type="file"	id="impotedText" style="display:none">
+      <button class="btn-toolbar-newFile" onclick="importTextFromFile()">Import File</button>
+      </tr>
+    </form>
     </div>
 
     <div class="btn-toolbar">

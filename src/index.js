@@ -1,5 +1,4 @@
 import $ from "jquery";
-
 import { createUser } from "./rest";
 import { openConnection } from "./sockets";
 import "bootstrap";

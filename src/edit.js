@@ -1,6 +1,5 @@
 import 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap';
 
-
 function formatDoc(cmd, value=null) {
 	if(value) {
 		document.execCommand(cmd, false, value);
@@ -64,12 +63,30 @@ function fileHandle(value) {
 }
 }
 
-function addNewFile() {
-	fileName = prompt("Please enter the name of your new file", "");
-	content.innerHTML = '';
-	document.getElementById("demo").innerHTML = fileName;
-  	 //send the file name to intellij
-}
+function importTextFromFile() {
+
+	var inputFile = document.createElement('input');
+	inputFile.type = 'file';
+	inputFile.onchange = e => { 
+
+		// getting a hold of the file reference
+		var file = e.target.files[0]; 
+	 
+		// setting up the reader
+		var reader = new FileReader();
+		reader.readAsText(file,'UTF-8');
+	 
+		// here we tell the reader what to do when it's done reading...
+		reader.onload = readerEvent => {
+		   var content = readerEvent.target.result; // this is the content!
+		   console.log( content );
+		   document.getElementById("content").innerHTML = content;
+		}
+	 
+	 }
+	 inputFile.click();
+
+	}
 
 function saveChanges() {
 	const blob = new Blob([content.innerText])
@@ -81,6 +98,4 @@ function saveChanges() {
       }
     })
 }
-
-
 
