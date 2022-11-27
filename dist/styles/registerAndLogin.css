@@ -102,6 +102,8 @@ button{
 #chk:checked ~ .signup label{
 	transform: scale(.4);
 }
-/* .regMessage{
-	margin: 500px auto;
-} */
+.regMessage{
+	position:absolute; left:50px; 
+	color: #043848;
+	font-weight: bold;
+}
