@@ -3,7 +3,7 @@ import { createUser } from "./rest";
 import { openConnection } from "./sockets";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {formatDoc} from "./edit"
+import {initEdit} from "./edit"
 // import 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap';
 
 // import "../styles/registerAndLogin.css"
@@ -75,6 +75,7 @@ $(document).ready(() => {
       template: "templates/edit.html",
       title: "Edit | " + urlPageTitle,
       description: "This is the contact page",
+      init: () => {initEdit();}
     },
     "/new-document": {
       template: "templates/newDoc.html",
@@ -110,7 +111,7 @@ $(document).ready(() => {
     );
     // set the content of the content div to the html
     document.getElementById("content").innerHTML = html;
-
+    route.init();
     switch (route.template) {
       //========================== start register ============================
       case "templates/registerAndLogin.html":
@@ -201,6 +202,36 @@ $(document).ready(() => {
           });
         break
         //========================== end documents ============================
+    
+        //========================= start edit =============================
+      // case "templates/edit.html":
+      //   var fileName = "file";
+
+        // $(`#export`).on("click", () => {
+        //   console.log("clicked")
+	
+          
+        //   const blob = new Blob(document.innerHTML)
+        //   console.log(document.innerHTML)
+        //   const url = URL.createObjectURL(blob)
+        //   const link = document.createElement('a');
+        //   link.href = url;
+        //   link.download = `${fileName}.txt`;
+        //   link.click();
+        // });
+
+        // $("#formatID").on("change", () => {formatDoc('formatBlock',$("#formatID").value)})
+                
+        //   function formatDoc(cmd, value=null) {
+        //     console.log("hi");
+        //     if(value) {
+        //       document.execCommand(cmd, false, value);
+        //     } else {
+        //       document.execCommand(cmd);
+        //     }
+        //   }
+      
+        //========================== end edit ============================
 
       default:
         console.log(`Sorry, we are out of ${route.template}.`);
@@ -255,3 +286,4 @@ function loginAlert(response) {
       "User is already registered! please log in";
   }
 }
+

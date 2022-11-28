@@ -1,21 +1,60 @@
-<<<<<<< HEAD
-import 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap';
-=======
 // import 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap';
 import $ from "jquery";
-$(() => {
-	$("#formatID").on("change", () => {formatDoc('formatBlock',$("#formatID").value)})
-})  
->>>>>>> 0c13dc41a6a7a347c8af203954f39fd4fe96690a
 
-function formatDoc(cmd, value=null) {
-	console.log("hi");
-	if(value) {
-		document.execCommand(cmd, false, value);
-	} else {
-		document.execCommand(cmd);
-	}
+var fileName = "file";
+
+// <!-- <select id="saveID" onchange="fileHandle(this.value); this.selectedIndex=0"> -->
+const initEdit = () =>{
+	$("#export").on("click",() =>{
+		console.log("clicked")
+		const blob = new Blob([content.innerText])
+		const url = URL.createObjectURL(blob)
+		const link = document.createElement('a');
+		link.href = url;
+		link.download = `${fileName}.txt`;
+		link.click();
+		console.log('init edit');
 }
+
+
+// $(function() {
+// 	$("#saveID").on("change" ,() => {fileHandle($("#saveID").value);})
+// }) 
+
+
+// function fileHandle(value) {
+// 	if(fileName != null)
+// 	{
+// 	if(value === 'txt') {
+// 		const blob = new Blob([content.innerText])
+// 		const url = URL.createObjectURL(blob)
+// 		const link = document.createElement('a');
+// 		link.href = url;
+// 		link.download = `${fileName}.txt`;
+// 		link.click();
+// 	} else if(value === 'pdf') {
+// 		html2pdf(content).save(fileName);
+// 	}
+// }
+// }
+
+
+
+// $(() => {
+// 	$("#formatID").on("change", () => {formatDoc('formatBlock',$("#formatID").value)})
+// })  
+
+// // <!-- <select onchange="formatDoc('formatBlock', this.value); this.selectedIndex=0;"> -->
+
+
+// function formatDoc(cmd, value=null) {
+// 	console.log("hi");
+// 	if(value) {
+// 		document.execCommand(cmd, false, value);
+// 	} else {
+// 		document.execCommand(cmd);
+// 	}
+// }
 
 // function addLink() {
 // 	const url = prompt('Insert url');
@@ -54,23 +93,7 @@ function formatDoc(cmd, value=null) {
 // 	}
 // })
 
-// var fileName = null;
 
-// function fileHandle(value) {
-// 	if(fileName != null)
-// 	{
-// 	if(value === 'txt') {
-// 		const blob = new Blob([content.innerText])
-// 		const url = URL.createObjectURL(blob)
-// 		const link = document.createElement('a');
-// 		link.href = url;
-// 		link.download = `${fileName}.txt`;
-// 		link.click();
-// 	} else if(value === 'pdf') {
-// 		html2pdf(content).save(fileName);
-// 	}
-// }
-// }
 
 // function addNewFile() {
 // 	fileName = prompt("Please enter the name of your new file", "");
@@ -89,5 +112,5 @@ function formatDoc(cmd, value=null) {
 //       }
 //     })
 // }
-export{formatDoc}
+export{initEdit}
 
