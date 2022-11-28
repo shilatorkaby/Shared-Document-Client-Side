@@ -29,12 +29,13 @@ body{
 
 .fa-solid {
   padding: 20px;
- position: absolute; left: 1000px; bottom: 100px;
-  text-align: center;
-  text-decoration: none;
-  color: rgb(118, 163, 173);
-  outline: #344648;
-  cursor: pointer;
+  position: absolute; left: 1000px; bottom: 100px;bottom: 75%;
+   text-align: center;
+   text-decoration: none;
+   color: rgb(118, 163, 173);
+   outline: #344648;
+   cursor: pointer;
+   font-size: 4em;
 }
 
 .fa-solid:hover{
