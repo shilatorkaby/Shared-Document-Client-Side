@@ -4,6 +4,8 @@ import { createUser } from "./rest";
 import { openConnection } from "./sockets";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import {formatDoc} from "./edit"
+// import 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap';
 
 // import "../styles/registerAndLogin.css"
 // import "../styles/edit.css"
