@@ -5,6 +5,7 @@ var fileName = "file";
 
 // <!-- <select id="saveID" onchange="fileHandle(this.value); this.selectedIndex=0"> -->
 const initEdit = () => {
+
   $("#export").on("click", () => {
     console.log("clicked");
     const blob = new Blob([content.innerText]);
@@ -53,6 +54,7 @@ $(() => {
 //   } else {
 //     document.execCommand(cmd);
 //   }
+
 // }
 
 // function addLink() {

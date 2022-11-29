@@ -2,6 +2,8 @@ import { initArchive } from "./archive";
 import { initLogin } from "./login";
 import { initRegister } from "./register";
 import { initCreateDocument } from "./createDocument";
+import { initEdit } from "./edit";
+
 
 const initRouter = () => {
   // create document click that watches the nav links only
@@ -64,7 +66,10 @@ const urlRoutes = {
     template: "templates/edit.html",
     title: "Edit | " + urlPageTitle,
     description: "This is the contact page",
+    init: () => {
+      initEdit();
   },
+},
   "/create-document": {
     template: "templates/createDocument.html",
     title: "Create Document | " + urlPageTitle,

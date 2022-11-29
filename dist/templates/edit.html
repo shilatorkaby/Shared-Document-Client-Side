@@ -1,7 +1,4 @@
-<link
-  href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
-  rel="stylesheet"
-/>
+<link href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="../styles/edit.css" />
 <div class="container">
   <h1 class="header" id="demo"></h1>
@@ -13,25 +10,18 @@
         <option value="txt">Save as txt</option>
         <option value="pdf">Save as pdf</option>
       </select> -->
- 
-    <button class="color" id="export">
-        export file
-      </button>  
 
-      <!-- <button class="btn-toolbar-newFile" id="newfile" onclick="addNewFile()" ;>
-        New File
-      </button> -->
-    </div>
-    </div>
+      <button class="color" id="export">
+        export file
+      </button>
+      </div>
   </div>
-  <div
-    id="content"
-    data-text="Hey this is your new file.. put your text here"
-    contenteditable="true"
-    spellcheck="false"
-    alig
-  ></div>
-  <button class="btn-save" id="save" onclick="saveChanges()" ;>
-    Save Changes
-  </button>
+</div>
+<div id="content" data-text="Hey this is your new file.. put your text here" contenteditable="true" spellcheck="false"
+  alig>
+  <textarea class="form-control" id="content" rows="20"></textarea>
+</div>
+<button class="btn-save" id="save" onclick="saveChanges()" ;>
+  Save Changes
+</button>
 </div>
