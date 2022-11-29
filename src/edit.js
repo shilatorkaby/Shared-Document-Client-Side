@@ -5,7 +5,9 @@ import { serverAddress } from "./constants";
 
 var fileName = "file";
 
+
 const initEdit = async (key) => {
+var textAreaContent = document.getElementById('text-area')
 
   await fetch(serverAddress + "/doc/fetch", {
     method: "POST",
@@ -19,12 +21,14 @@ const initEdit = async (key) => {
       return response.status == 200 ? response.json() : null;
     })
     .then(async (data) => {
-		console.log(data);
       if (data != null) {
+        console.log(data);
+        document.getElementById('demo').innerHTML=data.fileName
+        textAreaContent.value = data.fileContent;
+        console.log(data.fileContent);
       }
     });
 
-  console.log(history.state);
 
   $("#export").on("click", () => {
     console.log("clicked");
@@ -44,7 +48,7 @@ const initEdit = async (key) => {
 
     var input = $("#text-area");
 
-	input.val() = "cheeecky breeki"
+	
 
     input.on("keydown", (event) => {
       startPos = input.prop("selectionStart");
