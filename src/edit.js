@@ -4,7 +4,7 @@ import $ from "jquery";
 var fileName = "file";
 
 // <!-- <select id="saveID" onchange="fileHandle(this.value); this.selectedIndex=0"> -->
-const initEdit = () =>{
+const initEdit = () => {
 	$("#export").on("click",() =>{
 		console.log("clicked")
 		const blob = new Blob([content.innerText])
@@ -14,6 +14,7 @@ const initEdit = () =>{
 		link.download = `${fileName}.txt`;
 		link.click();
 		console.log('init edit');
+	})
 }
 
 
@@ -112,5 +113,6 @@ const initEdit = () =>{
 //       }
 //     })
 // }
-export{initEdit}
+
+// export{initEdit}
 
