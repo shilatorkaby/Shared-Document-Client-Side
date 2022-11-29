@@ -1,5 +1,5 @@
 import $ from "jquery";
-
+import { openConnection } from './sockets';
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -29,3 +29,4 @@ $(() => {
 //       "User is already registered! please log in";
 //   }
 // }
+openConnection();
