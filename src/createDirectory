@@ -7,7 +7,7 @@ const initCreateDirectory = (key) => {
     let title = $("#title").val();
 
     if (title.length != 0) {
-      fetch(serverAddress + "/user/create-document", {
+      fetch(serverAddress + "/user/create-directory", {
         method: "POST",
         body: JSON.stringify({ fileName: title }),
         headers: {

@@ -72,11 +72,19 @@ const urlRoutes = {
 },
   "/create-document": {
     template: "templates/createDocument.html",
-    title: "New Document | " + urlPageTitle,
+    title: "Create Document | " + urlPageTitle,
     description: "This is the contact page",
     init: () => {
       initCreateDocument(key);
     },
+    "/create-directory": {
+      template: "templates/createDocument.html",
+      title: "Create Directory | " + urlPageTitle,
+      description: "This is the contact page",
+      init: () => {
+        initCreateDirectory(key);
+      },
+    }
   },
 };
 
