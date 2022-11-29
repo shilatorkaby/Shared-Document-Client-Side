@@ -7,7 +7,6 @@ import { serverAddress } from "./constants";
 import { urlLocationHandler } from "./router";
 
 const initArchive = (key) => {
-
   fetch(serverAddress + "/user/get/root/sub-files", {
     method: "POST",
     // body: JSON.stringify({ "token": token }),
@@ -28,26 +27,25 @@ const initArchive = (key) => {
       if (files != null) {
         for (const file of files) {
           console.log(file);
-          
-          // we check if the given file is document or directory
-          if(isDocument(file)){
-            $("#content").append(documentHtml(file))
 
-            // we add listeners for each button dynamically 
+          // we check if the given file is document or directory
+          if (isDocument(file)) {
+            $("#content").append(documentHtml(file));
+
+            // we add listeners for each button dynamically
             $(`#edit-${file.id}`).on("click", async () => {
-              window.history.pushState({}, "", `/edit`);
+              window.history.pushState({ id: file.docId, title: file.name }, "", `/edit`);
               urlLocationHandler();
             });
-          }
-          else{
-            $("#content").append(directoryHtml(file))
-            // we add listeners for each button dynamically 
+          } else {
+            $("#content").append(directoryHtml(file));
+            // we add listeners for each button dynamically
             $(`#open-${file.id}`).on("click", async () => {
               // open directory
             });
           }
-                 
-          // we add listeners for each button dynamically 
+
+          // we add listeners for each button dynamically
           $(`#move-${file.id}`).on("click", async () => {
             window.history.pushState({}, "", `/edit`);
             urlLocationHandler();
@@ -74,8 +72,8 @@ const documentHtml = (file) => {
             <button id="edit-${file.id}" class="btn btn-success"> Edit </button>
             <button id="move-${file.id}" class="btn btn-primary"> Move </button>
             <button id="delete-${file.id}" class="btn btn-danger"> Delete </button>
-        </div>`
-}
+        </div>`;
+};
 
 const directoryHtml = (file) => {
   return `<div data-id="${file.id}" data-fid="${file.fatherId}" class="col-3">
@@ -86,7 +84,7 @@ const directoryHtml = (file) => {
             <button id="open-${file.id}" class="btn btn-success"> Open </button>
             <button id="move-${file.id}" class="btn btn-primary"> Move </button>
             <button id="delete-${file.id}" class="btn btn-danger"> Delete </button>
-        </div>`
-}
+        </div>`;
+};
 
 export { initArchive };

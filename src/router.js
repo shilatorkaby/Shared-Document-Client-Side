@@ -67,7 +67,7 @@ const urlRoutes = {
     title: "Edit | " + urlPageTitle,
     description: "This is the contact page",
     init: () => {
-      initEdit(key,docId);
+      initEdit(key);
   },
 },
   "/create-document": {
