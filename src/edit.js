@@ -5,17 +5,21 @@ var fileName = "file";
 
 // <!-- <select id="saveID" onchange="fileHandle(this.value); this.selectedIndex=0"> -->
 const initEdit = () => {
+
 	$("#export").on("click",() =>{
 		console.log("clicked")
-		const blob = new Blob([content.innerText])
+		var message = $('textarea#content').val();
+		console.log(message);
+		const blob = new Blob([message])
 		const url = URL.createObjectURL(blob)
 		const link = document.createElement('a');
 		link.href = url;
 		link.download = `${fileName}.txt`;
 		link.click();
-		console.log('init edit');
 	})
 }
+
+export{initEdit}
 
 
 // $(function() {
@@ -114,5 +118,4 @@ const initEdit = () => {
 //     })
 // }
 
-// export{initEdit}
 
