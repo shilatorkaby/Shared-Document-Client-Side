@@ -2,12 +2,12 @@
 import $ from "jquery";
 import { addUpdate } from "./sockets";
 import { serverAddress } from "./constants";
+import { validateEmail } from "./validations";
 
 var fileName = "file";
 
-
 const initEdit = async (key) => {
-var textAreaContent = document.getElementById('text-area')
+  var textAreaContent = document.getElementById("text-area");
 
   await fetch(serverAddress + "/doc/fetch", {
     method: "POST",
@@ -23,12 +23,11 @@ var textAreaContent = document.getElementById('text-area')
     .then(async (data) => {
       if (data != null) {
         console.log(data);
-        document.getElementById('demo').innerHTML=data.fileName
+        document.getElementById("demo").innerHTML = data.fileName;
         textAreaContent.value = data.fileContent;
         console.log(data.fileContent);
       }
     });
-
 
   $("#export").on("click", () => {
     console.log("clicked");
@@ -47,8 +46,6 @@ var textAreaContent = document.getElementById('text-area')
     let endPos;
 
     var input = $("#text-area");
-
-	
 
     input.on("keydown", (event) => {
       startPos = input.prop("selectionStart");
@@ -78,6 +75,25 @@ var textAreaContent = document.getElementById('text-area')
         docId
       );
     });
+  });
+
+  // share by email feature
+  $("#share").on("click", () => {
+
+    if (validateEmail($("#email").val())) {
+      fetch(serverAddress + "/share/via/email", {
+        method: "POST",
+        body: JSON.stringify({
+          docId: history.state.id,
+          email: $("#email").val(),
+          userRole: $('input[name="user-role"]:checked').val(),
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          token: key.token,
+        },
+      });
+    }
   });
 };
 
