@@ -6,7 +6,23 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { serverAddress } from "./constants";
 import { urlLocationHandler } from "./router";
 
-const initArchive = (key) => {
+const initArchive = async (key) => {
+  
+  let objs;
+
+  await fetch(serverAddress + "/doc/roles", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      token: key.token,
+    },
+  })
+  .then((response) => {
+    return response.status == 200 ? response.json() : null;
+  })
+  .then((data) => {
+    objs = data
+  });
 
   let route = "/user/get/root/sub-files"
   let body = JSON.stringify({})
@@ -48,8 +64,17 @@ const initArchive = (key) => {
 
             // we add listeners for each button dynamically
             $(`#edit-${file.id}`).on("click", async () => {
-              window.history.pushState({ id: file.docId, title: file.name }, "", `/edit`);
-              urlLocationHandler();
+              const role = findRole(objs, file.docId);
+
+              if(role != "VIEWER"){
+                window.history.pushState({ token: key.token ,id: file.docId, title: file.name }, "", `/edit`);
+                urlLocationHandler();
+              }
+              else{
+                window.history.pushState({ token: key.token ,id: file.docId, title: file.name }, "", `/edit-viewer`);
+                urlLocationHandler();
+              }
+              
             });
           } else {
             $("#content").append(directoryHtml(file));
@@ -101,5 +126,13 @@ const directoryHtml = (file) => {
             <button id="delete-${file.id}" class="btn btn-danger"> Delete </button>
         </div>`;
 };
+
+const findRole = (objs, docId) => {
+  for(let obj of objs){
+    if(obj.docId == docId){
+      return obj.role
+    }
+  }
+}
 
 export { initArchive };
