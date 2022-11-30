@@ -1,5 +1,6 @@
 import $ from "jquery";
 
+import {urlLocationHandler} from "./router";
 import { serverAddress } from "./constants";
 
 const initCreateDocument = (key) => {
@@ -14,6 +15,12 @@ const initCreateDocument = (key) => {
           "Content-Type": "application/json",
           token: key.token,
         },
+      }).then((response) => {
+        if (response.status == 200) {
+          console.log("hello");
+          window.history.pushState({}, "", "/archive");
+          urlLocationHandler();
+        }
       });
     }
   });

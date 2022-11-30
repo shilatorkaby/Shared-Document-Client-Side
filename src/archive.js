@@ -7,9 +7,18 @@ import { serverAddress } from "./constants";
 import { urlLocationHandler } from "./router";
 
 const initArchive = (key) => {
-  fetch(serverAddress + "/user/get/root/sub-files", {
+
+  let route = "/user/get/root/sub-files"
+  let body = JSON.stringify({})
+
+  if(history.state.fid != null && history.state.title != null){
+    route = "/user/get/sub-files"
+    body = JSON.stringify({"id": history.state.fid, "name": history.state.title})
+  }
+
+  fetch(serverAddress + route, {
     method: "POST",
-    // body: JSON.stringify({ "token": token }),
+    body: body,
     headers: {
       "Content-Type": "application/json",
       token: key.token,
@@ -41,7 +50,8 @@ const initArchive = (key) => {
             $("#content").append(directoryHtml(file));
             // we add listeners for each button dynamically
             $(`#open-${file.id}`).on("click", async () => {
-              // open directory
+              window.history.pushState({fid: file.id, title: file.name}, "", `/archive`);
+              urlLocationHandler();
             });
           }
 
