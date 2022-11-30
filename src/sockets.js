@@ -1,7 +1,8 @@
 import * as SockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
-import { update} from './edit';
 import { serverAddress } from "./constants";
+import { update} from './edit';
+
 
 let stompClient;
 const socketFactory = () => {
@@ -27,8 +28,9 @@ const openConnection = () => {
   stompClient.connect({}, onConnected);
 };
 
-const addUpdate = (user, content, position,startPos,endPos,docId) => {
-  sendUpate(user, "APPEND", content, position,startPos,endPos,docId)
+
+const addUpdate = (token, content, position,startPos,endPos,docId) => {
+  sendUpate(token, "APPEND", content, position,startPos,endPos,docId)
 }
 
 const sendUpate = (user, type, content, position,startPos,endPos,docId) => {
