@@ -4,25 +4,20 @@
   <h1 class="header" id="demo"></h1>
   <div class="toolbar">
     <div class="head">
-      <!-- <select id="saveID" onchange="fileHandle(this.value); this.selectedIndex=0"> -->
-      <!-- <select id="saveID">
-        <option value="" selected="" hidden="" disabled="">Save As</option>
-        <option value="txt">Save as txt</option>
-        <option value="pdf">Save as pdf</option>
-      </select> -->
-      <button class="btn-export" id="export">
-        export file
-      </button> <button id="share" class="btn btn-info">
-          share
-        </button>        
-        <input type="text" id="email" placeholder="share this document with">
 
+      
+      <button class="color" id="export">
+        export file
+      </button> 
       <div>
+        <input type="text" id="email" placeholder="share this document with">
         <input type="radio" id="viewer" name="user-role" value="viewer" checked="checked">
         <label for="viewer">viewer</label>
         <input type="radio" id="editor" name="user-role" value="editor">
         <label for="editor">editor</label>
-       
+        <button id="share" class="btn btn-info">
+          share
+        </button>
       </div>
 
     </div>

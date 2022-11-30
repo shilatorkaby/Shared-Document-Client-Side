@@ -2,6 +2,7 @@
 import $ from "jquery";
 import { addUpdate } from "./sockets";
 import { serverAddress } from "./constants";
+import { validateEmail } from "./validations";
 
 
 
@@ -54,7 +55,23 @@ var textAreaContent = document.getElementById('text-area')
 
     var input = $("#text-area");
 
-	
+	  $("#share").on("click", () => {
+
+      if (validateEmail($("#email").val())) {
+        fetch(serverAddress + "/share/via/email", {
+          method: "POST",
+          body: JSON.stringify({
+            docId: history.state.id,
+            email: $("#email").val(),
+            userRole: $('input[name="user-role"]:checked').val(),
+          }),
+          headers: {
+            "Content-Type": "application/json",
+            token: key.token,
+          },
+        });
+      }
+    });
 
     input.on("keydown", (event) => {
       startPos = input.prop("selectionStart");
@@ -82,7 +99,7 @@ var textAreaContent = document.getElementById('text-area')
         end - 1,
         startPos,
         endPos,
-        docId
+        history.state.id
       );
     });
   });
