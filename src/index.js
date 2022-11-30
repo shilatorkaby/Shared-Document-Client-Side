@@ -7,6 +7,7 @@ import { initRouter } from "./router";
 
 $(() => {
   initRouter();
+  
+  openConnection();
 });
 
-openConnection();

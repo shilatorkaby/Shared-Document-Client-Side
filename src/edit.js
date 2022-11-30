@@ -4,10 +4,13 @@ import { addUpdate } from "./sockets";
 import { serverAddress } from "./constants";
 import { validateEmail } from "./validations";
 
-var fileName = "file";
+
 
 const initEdit = async (key) => {
-  var textAreaContent = document.getElementById("text-area");
+
+  var fileName = "file";
+
+var textAreaContent = document.getElementById('text-area')
 
   await fetch(serverAddress + "/doc/fetch", {
     method: "POST",
@@ -23,11 +26,15 @@ const initEdit = async (key) => {
     .then(async (data) => {
       if (data != null) {
         console.log(data);
-        document.getElementById("demo").innerHTML = data.fileName;
+        fileName = data.fileName
+        document.getElementById('demo').innerHTML=fileName
+        if(data.fileContent!=null){
         textAreaContent.value = data.fileContent;
+        }
         console.log(data.fileContent);
       }
     });
+
 
   $("#export").on("click", () => {
     console.log("clicked");
@@ -41,11 +48,30 @@ const initEdit = async (key) => {
     link.click();
   });
 
+
   $(() => {
     let startPos;
     let endPos;
 
     var input = $("#text-area");
+
+	  $("#share").on("click", () => {
+
+      if (validateEmail($("#email").val())) {
+        fetch(serverAddress + "/share/via/email", {
+          method: "POST",
+          body: JSON.stringify({
+            docId: history.state.id,
+            email: $("#email").val(),
+            userRole: $('input[name="user-role"]:checked').val(),
+          }),
+          headers: {
+            "Content-Type": "application/json",
+            token: key.token,
+          },
+        });
+      }
+    });
 
     input.on("keydown", (event) => {
       startPos = input.prop("selectionStart");
@@ -64,6 +90,7 @@ const initEdit = async (key) => {
         );
       }
     });
+
     input.on("input", (event) => {
       let end = input.prop("selectionEnd");
       addUpdate(
@@ -72,42 +99,23 @@ const initEdit = async (key) => {
         end - 1,
         startPos,
         endPos,
-        docId
+        history.state.id
       );
     });
-  });
-
-  // share by email feature
-  $("#share").on("click", () => {
-
-    if (validateEmail($("#email").val())) {
-      fetch(serverAddress + "/share/via/email", {
-        method: "POST",
-        body: JSON.stringify({
-          docId: history.state.id,
-          email: $("#email").val(),
-          userRole: $('input[name="user-role"]:checked').val(),
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          token: key.token,
-        },
-      });
-    }
   });
 };
 
 const update = (updateData) => {
-  let textArea = $("#content");
-  let start = textArea.prop("selectionStart");
+  let start = textAreaContent.prop("selectionStart");
   const urlParam = new URLSearchParams(window.location.search);
   const documentId = urlParam.get("id");
 
-  if (
-    sessionStorage.getItem("token") != updateData.user &&
-    updateData.documentId == documentId
-  ) {
-    let text = textArea.val();
+
+  // if (sessionStorage.getItem("token") != updateData.user && updateData.documentId == documentId
+  
+  if (updateData.documentId == documentId)
+    {
+    let text = textAreaContent.val();
     if (updateData.content == null && updateData.startPos < updateData.endPos) {
       text =
         text.substring(0, updateData.startPos) +
