@@ -2,6 +2,7 @@ import { initArchive } from "./archive";
 import { initLogin } from "./login";
 import { initRegister } from "./register";
 import { initCreateDocument } from "./createDocument";
+import { initCreateDirectory } from "./createDirectory";
 import { initEdit } from "./edit";
 
 const initRouter = () => {
@@ -83,7 +84,7 @@ const urlRoutes = {
     description: "This is the document page",
     init: () => {
       initCreateDocument(key);
-    },
+    }},
     "/create-directory": {
       template: "templates/createDirectory.html",
       title: "Create Directory | " + urlPageTitle,
@@ -91,9 +92,8 @@ const urlRoutes = {
       init: () => {
         initCreateDirectory(key);
       },
-    },
-  },
-};
+    }
+ };
 
 // create a function that watches the url and calls the urlLocationHandler
 const urlRoute = async (event) => {
