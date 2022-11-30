@@ -120,6 +120,11 @@ const update = (updateData) => {
       text =
         text.substring(0, updateData.startPos) +
         text.substring(updateData.endPos, text.length);
+
+        text = text.substring(0, updateData.position) +
+         updateData.content +
+         text.substring(updateData.position, text.length);
+
     } else if (updateData.content == null) {
       text =
         text.substring(0, updateData.position + 1) +
@@ -127,7 +132,6 @@ const update = (updateData) => {
     } else {
       text =
         text.substring(0, updateData.position) +
-        updateData.content +
         text.substring(updateData.position, text.length);
     }
     textArea.val(text);

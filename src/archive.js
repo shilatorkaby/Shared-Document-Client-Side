@@ -32,6 +32,11 @@ const initArchive = (key) => {
         window.history.pushState({}, "", "/create-document");
         urlLocationHandler();
       });
+      $("#create-directory").on("click", () => {
+          window.history.pushState({}, "", "/create-directory");
+          urlLocationHandler();
+        });
+     
 
       if (files != null) {
         for (const file of files) {
