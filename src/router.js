@@ -4,7 +4,6 @@ import { initRegister } from "./register";
 import { initCreateDocument } from "./createDocument";
 import { initEdit } from "./edit";
 
-
 const initRouter = () => {
   // create document click that watches the nav links only
   document.addEventListener("click", (event) => {
@@ -65,26 +64,34 @@ const urlRoutes = {
   "/edit": {
     template: "templates/edit.html",
     title: "Edit | " + urlPageTitle,
-    description: "This is the contact page",
+    description: "This is the edit page",
     init: () => {
       initEdit(key);
+    },
   },
-},
+  "/edit-viewer": {
+    template: "templates/editViewer.html",
+    title: "Edit | " + urlPageTitle,
+    description: "This is the edit page",
+    init: () => {
+      initEdit(key);
+    },
+  },
   "/create-document": {
     template: "templates/createDocument.html",
     title: "Create Document | " + urlPageTitle,
-    description: "This is the contact page",
+    description: "This is the document page",
     init: () => {
       initCreateDocument(key);
     },
     "/create-directory": {
       template: "templates/createDirectory.html",
       title: "Create Directory | " + urlPageTitle,
-      description: "This is the contact page",
+      description: "This is the directory page",
       init: () => {
         initCreateDirectory(key);
       },
-    }
+    },
   },
 };
 
