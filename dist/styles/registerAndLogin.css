@@ -111,7 +111,7 @@ body{
 	width:100%;
 	height: 100%;
 }
-label{
+#lab{
 	color: rgb(8, 74, 91);
 	font-size: 2.5em;
 	justify-content: center;
@@ -121,8 +121,7 @@ label{
 	cursor: pointer;
 	transition: .5s ease-in-out;
 }
-
-input{
+#register-email{
 	width: 70%;
 	height: 50px;
 	background: #e0dede;
@@ -133,6 +132,40 @@ input{
 	outline: none;
 	border-radius: 5px;
 }
+#register-password{
+	width: 70%;
+	height: 50px;
+	background: #e0dede;
+	justify-content: center;
+	display: flex;
+	margin: 50px auto auto auto;
+	border: none;
+	outline: none;
+	border-radius: 5px;
+}
+#login-email{
+	width: 70%;
+	height: 50px;
+	background: #e0dede;
+	justify-content: center;
+	display: flex;
+	margin: 50px auto auto auto;
+	border: none;
+	outline: none;
+	border-radius: 5px;
+}
+#login-password{
+	width: 70%;
+	height: 50px;
+	background: #e0dede;
+	justify-content: center;
+	display: flex;
+	margin: 50px auto auto auto;
+	border: none;
+	outline: none;
+	border-radius: 5px;
+}
+
 button{
 	width: 70%;
 	height: 40px;

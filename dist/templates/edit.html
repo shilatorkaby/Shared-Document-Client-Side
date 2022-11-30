@@ -4,9 +4,16 @@
   <div class="navbar">
     <a class="btn-export" id="export">export</a>
     <a class="btn-save" id="save" onclick="saveChanges()">Save Changes</a>
+    <!-- <input id="email" class="share-input" placeholder="share this document with"> -->
+    <input id="viewer" type="radio" class="share-bt" name="user-role" value="viewer" checked="checked">
+    <label class="view_style" for="viewer">viewer</label>
+    <input id="editor" type="radio" class="share-bt" name="user-role" value="editor" checked="checked">
+    <label class="edit_style" for="editor">editor</label>
+    <a class="btn btn-info" id="share">Share</a>
   </div>
-</div>
-<div id="text-area-div" data-text="Hey this is your new file.. put your text here" contenteditable="true"
-  spellcheck="false" alig>
-  <textarea class="form-control" id="text-area" rows="20"></textarea>
+
+  <div id="text-area-div" data-text="Hey this is your new file.. put your text here" contenteditable="true"
+    spellcheck="false" alig>
+    <textarea class="form-control" id="text-area" rows="20"></textarea>
+  </div>
 </div>

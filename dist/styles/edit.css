@@ -25,7 +25,7 @@ a {
   width: 100%;
   background: #fff;
   border-radius: 8px;
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 #content {
@@ -42,75 +42,44 @@ a {
   font-family: Arial;
 }
 
-/* Links inside the navbar */
 .navbar a {
-  /* float: left; */
   font-size: 16px;
   color: white;
-  /* text-align: center; */
-  padding: 14px 16px;
   text-decoration: none;
+ padding-top: 20px;
+
 }
 .btn-save{
   position: relative; right: 50px;
 }
 .btn-export{
-  position: relative; left: 50px;
+  position: relative; left: 200px;
 }
-
-
-/* The dropdown container */
-.dropdown {
-  float: left;
-  overflow: hidden;
-}
-
-/* Dropdown button */
-.dropdown .dropbtn {
-  font-size: 16px;
-  border: none;
-  outline: none;
-  color: white;
-  padding: 14px 16px;
-  background-color: inherit;
-  font-family: inherit; /* Important for vertical align on mobile phones */
-  margin: 0; /* Important for vertical align on mobile phones */
-}
-
-/* Add a red background color to navbar links on hover */
 .navbar a:hover, .dropdown:hover .dropbtn {
   background-color: rgb(120, 203, 205);
 }
-
-/* Dropdown content (hidden by default) */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+.view_style{
+margin-left: 40px;
 }
-
-/* Links inside the dropdown */
-.dropdown-content a {
-  float: none;
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
+.edit_style{
+  margin-right: 400px;
 }
-
-/* Add a grey background color to dropdown links on hover */
-.dropdown-content a:hover {
-  background-color: #ddd;
+#email{
+  margin-left: 190px;
+  width: 150px;
+  position: relative; left: 60px;
 }
-
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
-  display: block;
+#editor{
+ margin-left: 0px;
 }
+#viewer{
+  margin-right: 0px;
+ }
+
+
+
+
+
 
 
 
