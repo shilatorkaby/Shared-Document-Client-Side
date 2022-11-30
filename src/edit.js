@@ -5,12 +5,11 @@ import { serverAddress } from "./constants";
 import { validateEmail } from "./validations";
 
 
-
 const initEdit = async (key) => {
 
   var fileName = "file";
 
-var textAreaContent = document.getElementById('text-area')
+ let textAreaContent = document.getElementById('text-area')
 
   await fetch(serverAddress + "/doc/fetch", {
     method: "POST",
@@ -106,7 +105,8 @@ var textAreaContent = document.getElementById('text-area')
 };
 
 const update = (updateData) => {
-  let start = textAreaContent.prop("selectionStart");
+  let textArea = $('#text-area');
+  let start = textArea.prop("selectionStart");
   const urlParam = new URLSearchParams(window.location.search);
   const documentId = urlParam.get("id");
 
@@ -115,7 +115,7 @@ const update = (updateData) => {
   
   if (updateData.documentId == documentId)
     {
-    let text = textAreaContent.val();
+    let text = textArea.val();
     if (updateData.content == null && updateData.startPos < updateData.endPos) {
       text =
         text.substring(0, updateData.startPos) +
