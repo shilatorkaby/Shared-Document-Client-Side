@@ -4,12 +4,10 @@ import { addUpdate } from "./sockets";
 import { serverAddress } from "./constants";
 import { validateEmail } from "./validations";
 
-
 const initEdit = async (key) => {
-
   var fileName = "file";
 
- let textAreaContent = document.getElementById('text-area')
+  let textAreaContent = document.getElementById("text-area");
 
   await fetch(serverAddress + "/doc/fetch", {
     method: "POST",
@@ -25,15 +23,14 @@ const initEdit = async (key) => {
     .then(async (data) => {
       if (data != null) {
         console.log(data);
-        fileName = data.fileName
-        document.getElementById('demo').innerHTML=fileName
-        if(data.fileContent!=null){
-        textAreaContent.value = data.fileContent;
+        fileName = data.fileName;
+        document.getElementById("demo").innerHTML = fileName;
+        if (data.fileContent != null) {
+          textAreaContent.value = data.fileContent;
         }
         console.log(data.fileContent);
       }
     });
-
 
   $("#export").on("click", () => {
     console.log("clicked");
@@ -47,15 +44,13 @@ const initEdit = async (key) => {
     link.click();
   });
 
-
   $(() => {
     let startPos;
     let endPos;
 
     var input = $("#text-area");
 
-	  $("#share").on("click", () => {
-
+    $("#share").on("click", () => {
       if (validateEmail($("#email").val())) {
         fetch(serverAddress + "/share/via/email", {
           method: "POST",
@@ -105,35 +100,41 @@ const initEdit = async (key) => {
 };
 
 const update = (updateData) => {
-  let textArea = $('#text-area');
+  let textArea = $("#text-area");
   let start = textArea.prop("selectionStart");
   const urlParam = new URLSearchParams(window.location.search);
   const documentId = urlParam.get("id");
 
+  console.log("urlParam: " + urlParam);
+  console.log("documentId: " + documentId);
+  console.log("updateData.user: " + updateData.user);
+  console.log("updateData.documentId: " + updateData.documentId);
+  console.log("history.state.token: " + history.state.token);
 
-  // if (sessionStorage.getItem("token") != updateData.user && updateData.documentId == documentId
-  
-  if (updateData.documentId == documentId)
-    {
-    let text = textArea.val();
-    if (updateData.content == null && updateData.startPos < updateData.endPos) {
-      text =
-        text.substring(0, updateData.startPos) +
-        text.substring(updateData.endPos, text.length);
-    } else if (updateData.content == null) {
-      text =
-        text.substring(0, updateData.position + 1) +
-        text.substring(updateData.position + 2, text.length);
-    } else {
-      text =
-        text.substring(0, updateData.position) +
-        updateData.content +
-        text.substring(updateData.position, text.length);
-    }
-    textArea.val(text);
-    if (updateData.position < start) {
-      start++;
-      textArea[0].setSelectionRange(start, start);
+  console.log("updateData.user != history.state.token && updateData.documentId == documentId");
+
+  if (updateData.user != history.state.token && updateData.docId == history.state.id){
+    if (updateData.documentId == documentId) {
+      let text = textArea.val();
+      if (updateData.content == null && updateData.startPos < updateData.endPos) {
+        text =
+          text.substring(0, updateData.startPos) +
+          text.substring(updateData.endPos, text.length);
+      } else if (updateData.content == null) {
+        text =
+          text.substring(0, updateData.position + 1) +
+          text.substring(updateData.position + 2, text.length);
+      } else {
+        text =
+          text.substring(0, updateData.position) +
+          updateData.content +
+          text.substring(updateData.position, text.length);
+      }
+      textArea.val(text);
+      if (updateData.position < start) {
+        start++;
+        textArea[0].setSelectionRange(start, start);
+      }
     }
   }
 };

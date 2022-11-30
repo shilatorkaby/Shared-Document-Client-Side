@@ -43,7 +43,7 @@ const initArchive = (key) => {
 
             // we add listeners for each button dynamically
             $(`#edit-${file.id}`).on("click", async () => {
-              window.history.pushState({ id: file.docId, title: file.name }, "", `/edit`);
+              window.history.pushState({ token: key.token ,id: file.docId, title: file.name }, "", `/edit`);
               urlLocationHandler();
             });
           } else {
