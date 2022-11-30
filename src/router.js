@@ -78,7 +78,7 @@ const urlRoutes = {
       initCreateDocument(key);
     },
     "/create-directory": {
-      template: "templates/createDocument.html",
+      template: "templates/createDirectory.html",
       title: "Create Directory | " + urlPageTitle,
       description: "This is the contact page",
       init: () => {

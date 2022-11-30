@@ -1,27 +1,12 @@
 <link href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="../styles/edit.css" />
 <div class="container">
-  <h1 class="header" id="demo"></h1>
-  <div class="toolbar">
-    <div class="head">
-      <!-- <select id="saveID" onchange="fileHandle(this.value); this.selectedIndex=0"> -->
-      <!-- <select id="saveID">
-        <option value="" selected="" hidden="" disabled="">Save As</option>
-        <option value="txt">Save as txt</option>
-        <option value="pdf">Save as pdf</option>
-      </select> -->
-
-      <button class="color" id="export">
-        export file
-      </button>
-    </div>
+  <div class="navbar">
+    <a class="btn-export" id="export">export</a>
+    <a class="btn-save" id="save" onclick="saveChanges()">Save Changes</a>
   </div>
 </div>
-<div id="text-area-div" data-text="Hey this is your new file.. put your text here" contenteditable="true" spellcheck="false"
-  alig>
+<div id="text-area-div" data-text="Hey this is your new file.. put your text here" contenteditable="true"
+  spellcheck="false" alig>
   <textarea class="form-control" id="text-area" rows="20"></textarea>
-</div>
-<button class="btn-save" id="save" onclick="saveChanges()" ;>
-  Save Changes
-</button>
 </div>

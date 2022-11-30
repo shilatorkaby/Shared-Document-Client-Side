@@ -21,7 +21,6 @@
   font-size: 1.2em;
   text-transform: uppercase;
   font-weight: 500;
-  /* display: inline-block; */
   width: 80px;
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
@@ -44,7 +43,7 @@
 }
 
 .navMenu a:nth-child(1):hover ~ .dot {
-  -webkit-transform: translateX(40px);
+  -webkit-transform: translateX(200px);
   transform: translateX(51px);
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
@@ -52,7 +51,7 @@
 }
 
 .navMenu a:nth-child(2):hover ~ .dot {
-  -webkit-transform: translateX(300px);
+  -webkit-transform: translateX(200px);
   transform: translateX(180px);
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
@@ -68,12 +67,19 @@
 }
 
 .navMenu a:nth-child(4):hover ~ .dot {
-  -webkit-transform: translateX(285px);
-  transform: translateX(500px);
+  -webkit-transform: translateX(200px);
+  transform: translateX(470px);
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
   opacity: 1;
 }
+.navMenu a:nth-child(5):hover ~ .dot {
+	-webkit-transform: translateX(200px);
+	transform: translateX(590px);
+	-webkit-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+	opacity: 1;
+  }
 body{
 	margin: 0;
 	padding: 0;
