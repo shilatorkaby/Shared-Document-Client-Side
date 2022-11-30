@@ -20,6 +20,19 @@ const initRegister = () => {
       }).then((response) => registerAlert(response));
     }
   });
+
+  
 };
+
+function registerAlert(response) {
+  console.log(response.status);
+  if (response.status == 200) {
+    document.getElementById("register-alert").innerHTML =
+      "Verification email has sent to your inbox";
+  } else {
+    document.getElementById("register-alert").innerHTML =
+      "User is already registered! please log in";
+  }
+}
 
 export { initRegister };

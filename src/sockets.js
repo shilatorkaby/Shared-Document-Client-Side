@@ -2,6 +2,7 @@ import * as SockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
 import { serverAddress } from "./constants";
 import { update} from './edit';
+// import { update } from './doc-functions';
 
 
 let stompClient;
