@@ -6,7 +6,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { serverAddress } from "./constants";
 import { urlLocationHandler } from "./router";
 
+let directoryId;
+let currentFile;
+
 const initArchive = async (key) => {
+  
+  directoryId = history.state.fid; 
   
   let objs;
 
@@ -27,9 +32,9 @@ const initArchive = async (key) => {
   let route = "/user/get/root/sub-files"
   let body = JSON.stringify({})
 
-  if(history.state.fid != null && history.state.title != null){
+  if(directoryId != null && history.state.title != null){
     route = "/user/get/sub-files"
-    body = JSON.stringify({"id": history.state.fid, "name": history.state.title})
+    body = JSON.stringify({"id": directoryId, "name": history.state.title})
   }
 
   fetch(serverAddress + route, {
@@ -45,11 +50,12 @@ const initArchive = async (key) => {
     })
     .then((files) => {
       $("#create-document").on("click", () => {
-        window.history.pushState({}, "", "/create-document");
+        window.history.pushState({dirId :directoryId}, "", "/create-document");
         urlLocationHandler();
       });
       $("#create-directory").on("click", () => {
-          window.history.pushState({}, "", "/create-directory");
+        console.log("archive-exist dir id: "+directoryId)
+          window.history.pushState({dirId :directoryId}, "", "/create-directory");
           urlLocationHandler();
         });
      
@@ -57,7 +63,7 @@ const initArchive = async (key) => {
       if (files != null) {
         for (const file of files) {
           console.log(file);
-
+          currentFile = file;
           // we check if the given file is document or directory
           if (isDocument(file)) {
             $("#content").append(documentHtml(file));
@@ -87,8 +93,10 @@ const initArchive = async (key) => {
 
           // we add listeners for each button dynamically
           $(`#move-${file.id}`).on("click", async () => {
-            window.history.pushState({}, "", `/edit`);
-            urlLocationHandler();
+            console.log(key.token,file.id);
+            displayOptionsToMove(key.token,file.id);
+            // window.history.pushState({fid: file.id}, "", `/edit`);
+            // urlLocationHandler();
           });
 
           $(`#delete-${file.id}`).on("click", async () => {
@@ -102,6 +110,54 @@ const initArchive = async (key) => {
 const isDocument = (file) => {
   return file.docId != null ? true : false;
 };
+
+const displayOptionsToMove = (keyToken,id) =>{
+  console.log(keyToken,id);
+
+  fetch(serverAddress + "/user/get/optional/dir", {
+    method: "POST",
+    body: JSON.stringify({"id": id}),
+    // mode: "no-cors",
+    headers: {
+      "Content-Type": "application/json",
+      token: keyToken,
+    },
+  })
+    .then((response) => {
+      return response.status == 200 ? response.json() : null;
+    }).then((files) => {
+      let options ="";
+    if(files.length >1)
+     {for (let file of files)
+      {
+        options +=" ";
+        options +=file.name;
+        console.log(file);
+      }
+    }
+    else {
+      options = files.name;
+      console.log(files);
+    }
+    $("#content").append(optionalDirToMove(options));
+    
+    });
+    getOptionalDir($("#content#move-dir"));
+
+};
+
+const getOptionalDir = (dirName) =>{
+  console.log(dirName.val() + "-> dirName");
+}
+
+const optionalDirToMove = (options) => {
+  return `<div id="option">
+           <b>Choose directory:</b> </br> ${options} </br>
+           <input type="text" id= "move-dir">
+           </div>`;
+};
+
+
 
 const documentHtml = (file) => {
   return `<div data-id="${file.id}" data-fid="${file.fatherId}" class="col-3">
