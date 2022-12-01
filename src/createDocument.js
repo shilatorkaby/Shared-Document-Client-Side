@@ -10,7 +10,7 @@ const initCreateDocument = (key) => {
     if (title.length != 0) {
       fetch(serverAddress + "/user/create-document", {
         method: "POST",
-        body: JSON.stringify({ fileName: title }),
+        body: JSON.stringify({fatherId:history.state.dirId, fileName: title }),
         headers: {
           "Content-Type": "application/json",
           token: key.token,

@@ -124,7 +124,7 @@ body{
 #register-email{
 	width: 70%;
 	height: 50px;
-	background: #e0dede;
+	background: #b0e2f0;
 	justify-content: center;
 	display: flex;
 	margin: 50px auto auto auto;
@@ -135,7 +135,7 @@ body{
 #register-password{
 	width: 70%;
 	height: 50px;
-	background: #e0dede;
+	background: #b0e2f0;
 	justify-content: center;
 	display: flex;
 	margin: 50px auto auto auto;
@@ -146,7 +146,7 @@ body{
 #login-email{
 	width: 70%;
 	height: 50px;
-	background: #e0dede;
+	background: #b0e2f0;
 	justify-content: center;
 	display: flex;
 	margin: 50px auto auto auto;
@@ -157,7 +157,7 @@ body{
 #login-password{
 	width: 70%;
 	height: 50px;
-	background: #e0dede;
+	background: #b0e2f0;
 	justify-content: center;
 	display: flex;
 	margin: 50px auto auto auto;
@@ -184,7 +184,7 @@ button{
 
 .login{
 	height: 600px;
-	background: #eee;
+	background: #f8feff;
 	border-radius: 60% / 15%;
 	transform: translateY(-180px);
 	transition: .8s ease-in-out;
@@ -219,6 +219,6 @@ button{
 }
 .regMessage{
 	position:absolute; left:50px; 
-	color: #043848;
+	color: #eb4577;
 	font-weight: bold;
 }
