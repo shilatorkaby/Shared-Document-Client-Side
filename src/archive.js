@@ -93,7 +93,7 @@ const initArchive = async (key) => {
           // we add listeners for each button dynamically
           $(`#move-${file.id}`).on("click", async () => {
             console.log(key.token,file.id);
-            displayOptionsToMove(key.token,file.id);
+            displayOptionsToMove(key.token,file.id,file.name);
             // window.history.pushState({fid: file.id}, "", `/edit`);
             // urlLocationHandler();
           });
@@ -112,7 +112,8 @@ const initArchive = async (key) => {
                   "Content-Type": "application/json",
                   token: key.token,
                 },
-              }).then(() => {
+              }).then((response) => {
+                console.log(response.body);
                 window.history.pushState({}, "", "/archive");
               })
              });
@@ -125,7 +126,7 @@ const isDocument = (file) => {
   return file.docId != null ? true : false;
 };
 
-const displayOptionsToMove = (keyToken,id) =>{
+const displayOptionsToMove = (keyToken,id,title) =>{
   console.log(keyToken,id);
 
   fetch(serverAddress + "/user/get/optional/dir", {
@@ -141,19 +142,17 @@ const displayOptionsToMove = (keyToken,id) =>{
       return response.status == 200 ? response.json() : null;
     }).then((files) => {
       let options ="";
-    if(files.length >1)
+    if(files.length >0)
      {for (let file of files)
       {
-        options +=" ";
         options +=file.name;
+        options +=" ,";
         console.log(file);
       }
+      options = options.substring(0,options.length-1)
     }
-    else {
-      options = files.name;
-      console.log(files);
-    }
-    $("#content").append(optionalDirToMove(options));
+    
+    $("#content").append(optionalDirToMove(title,options));
     
     });
     getOptionalDir($("#content#move-dir"));
@@ -164,10 +163,9 @@ const getOptionalDir = (dirName) =>{
   console.log(dirName.val() + "-> dirName");
 }
 
-const optionalDirToMove = (options) => {
+const optionalDirToMove = (dirName,options) => {
   return `<div id="option">
-           <b>Choose directory:</b> </br> ${options} </br>
-           <input type="text" id= "move-dir">
+           <b>${dirName} can move to:</b> </br> ${options} </br>
            </div>`;
 };
 
