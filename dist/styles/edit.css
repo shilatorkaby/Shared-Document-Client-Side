@@ -69,7 +69,7 @@ a {
   display: flex;
   align-items: center;
   grid-gap: 6px;
-  padding: 0 20px;
+  padding: 0 15px;
 }
 
 .toolbar .head .color span {
@@ -132,9 +132,13 @@ a {
   font-size: small;
 }
 
+
 .btn-save {
-  background: rgb(32, 136, 155);
+   background: rgb(128, 213, 228);
   border: 2px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+
   cursor: pointer;
   width: 100px;
   height: 30px;
@@ -142,12 +146,13 @@ a {
   display: flex;
   font-size: 12px;
   font-weight: bold;
-  align-items: center;
-  margin: 4px 2px;
-  transition-duration: 0.4s;
+  align-items:center;
   justify-content: center;
-  position: absolute;
-  left: 50%;
+  position: static;
+  left: 70%; 
+  bottom: 330px;
+
+  
 }
 .btn-toolbar-import{
   background: rgb(255, 255, 255);

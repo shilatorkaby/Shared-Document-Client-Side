@@ -54,7 +54,6 @@ const initArchive = async (key) => {
         urlLocationHandler();
       });
       $("#create-directory").on("click", () => {
-        console.log("archive-exist dir id: "+directoryId)
           window.history.pushState({dirId :directoryId}, "", "/create-directory");
           urlLocationHandler();
         });
@@ -100,8 +99,23 @@ const initArchive = async (key) => {
           });
 
           $(`#delete-${file.id}`).on("click", async () => {
-            // delete document
-          });
+
+              fetch(serverAddress + "/user/delete/dir", {
+                method: "POST",
+                body: JSON.stringify({
+                  id: file.id,
+                  fatherId : directoryId,
+                  docId : file.docId,
+                  name : file.name,
+                }),
+                headers: {
+                  "Content-Type": "application/json",
+                  token: key.token,
+                },
+              }).then(() => {
+                window.history.pushState({}, "", "/archive");
+              })
+             });
         }
       }
     });

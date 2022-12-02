@@ -32,6 +32,31 @@ const initEdit = async (key) => {
       }
     });
 
+  $("#import").on("click", () => {
+
+      var inputFile = document.createElement('input');
+      inputFile.type = 'file';
+      inputFile.onchange = e => { 
+    
+        // getting a hold of the file reference
+        var file = e.target.files[0]; 
+    
+        // setting up the reader
+        var reader = new FileReader();
+        reader.readAsText(file,'UTF-8');
+    
+        // here we tell the reader what to do when it's done reading...
+        reader.onload = readerEvent => {
+           var content = readerEvent.target.result; // this is the content!
+           console.log( content );
+           textAreaContent.value += '\n';
+           textAreaContent.value += content;
+        }
+    
+       }
+       inputFile.click();
+      });
+  
   $("#export").on("click", () => {
     console.log("clicked");
     var message = $("textarea#text-area").val();
@@ -63,6 +88,42 @@ const initEdit = async (key) => {
             "Content-Type": "application/json",
             token: key.token,
           },
+        }).then((response) => {
+          return response.status == 200 ? response.json() : null;
+        })
+          .then(async (data) => {
+            if (data != null) {
+              console.log(data);
+              console.log(data.fileContent);
+            }
+          });
+
+      }
+    });
+
+    $("#save").on("click", () => {
+      var content = $("textarea#text-area").val();
+
+      if (content != null) {
+        fetch(serverAddress + "/doc/save", {
+          method: "POST",
+          body: JSON.stringify({
+            id: history.state.id,
+            fileContent: content,
+            email: $("#email").val()
+          }),
+          headers: {
+            "Content-Type": "application/json",
+            token: key.token,
+          },
+        }).then((response) => {
+          return response.status == 200 ? response.json() : null;
+        }).then(async (data) => {
+          if (data != null && data.fileContent != null) {
+              console.log(data);
+              console.log("display updated text back in doc: "+data.fileContent);
+              $("#text-area").value = data.fileContent;
+          }
         });
       }
     });
@@ -75,12 +136,12 @@ const initEdit = async (key) => {
       if (key == 8 || key == 46) {
         console.log(
           "deleting: " +
-            input
-              .val()
-              .substring(
-                input.prop("selectionStart"),
-                input.prop("selectionEnd")
-              )
+          input
+            .val()
+            .substring(
+              input.prop("selectionStart"),
+              input.prop("selectionEnd")
+            )
         );
       }
     });
@@ -111,9 +172,9 @@ const update = (updateData) => {
   console.log("updateData.documentId: " + updateData.documentId);
   console.log("history.state.token: " + history.state.token);
 
-  console.log("updateData.user != history.state.token && updateData.documentId == documentId");
+  // console.log("updateData.user != history.state.token && updateData.documentId == documentId");
 
-  if (updateData.user != history.state.token && updateData.docId == history.state.id){
+  if (updateData.user != history.state.token && updateData.docId == history.state.id) {
     if (updateData.documentId == documentId) {
       let text = textArea.val();
       if (updateData.content == null && updateData.startPos < updateData.endPos) {
