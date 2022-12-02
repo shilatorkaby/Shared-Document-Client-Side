@@ -1,32 +1,35 @@
 <link href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="../styles/edit.css" />
 <div class="container">
+  <div class="inline">
   <h1 class="header" id="demo"></h1>
+</div>  
+<button class="btn-save" id="save"> Save Changes </button>
+
   <div class="toolbar">
     <div class="head">
-
-      
+     
+      <button class="color" id="import">
+        import text from file
+      </button> 
       <button class="color" id="export">
         export file
       </button> 
+ 
       <div>
         <input type="text" id="email" placeholder="share this document with">
         <input type="radio" id="viewer" name="user-role" value="viewer" checked="checked">
         <label for="viewer">viewer</label>
         <input type="radio" id="editor" name="user-role" value="editor">
         <label for="editor">editor</label>
-        <button id="share" class="btn btn-info">
-          share
-        </button>
+        <button id="share" class="btn btn-info">share</button>
       </div>
 
     </div>
   </div>
 </div>
-<div id="text-area-div" data-text="Hey this is your new file.. put your text here" contenteditable="true" spellcheck="false">
-  <textarea class="form-control" id="text-area" rows="20"></textarea>
+<div id="text-area-div" contenteditable="true" spellcheck="false">
+  <textarea class="form-control" id="text-area" rows="500" placeholder="Hey this is your new file.. put your text here"></textarea>
 </div>
-<button class="btn-save" id="save" onclick="saveChanges()" ;>
-  Save Changes
-</button>
+
 </div>
