@@ -35,7 +35,7 @@ const initArchive = async (key) => {
 
   if (directoryId != null && history.state.title != null) {
     route = "/user/get/sub-files"
-    body = JSON.stringify({ "id": directoryId, "name": history.state.title })
+    body = JSON.stringify({ id: directoryId, name: history.state.title })
   }
 
   fetch(serverAddress + route, {
@@ -51,11 +51,11 @@ const initArchive = async (key) => {
     })
     .then((files) => {
       $("#create-document").on("click", () => {
-        window.history.pushState({ dirId: directoryId }, "", "/create-document");
+        window.history.pushState({ id: directoryId }, "", "/create-document");
         urlLocationHandler();
       });
       $("#create-directory").on("click", () => {
-        window.history.pushState({ dirId: directoryId }, "", "/create-directory");
+        window.history.pushState({ id: directoryId }, "", "/create-directory");
         urlLocationHandler();
       });
 
@@ -95,7 +95,8 @@ const initArchive = async (key) => {
           $(`#move-${file.id}`).on("click", async () => {
             console.log(key.token, file.id);
             displayOptionsToMove(key.token, file.id, file.name);
-          });
+
+           });
 
           $(`#delete-${file.id}`).on("click", async () => {
 
@@ -131,7 +132,7 @@ const displayOptionsToMove = (keyToken, id, title) => {
 
   fetch(serverAddress + "/user/get/optional/dir", {
     method: "POST",
-    body: JSON.stringify({ "id": id }),
+    body: JSON.stringify({ id: id ,name: title }),
     // mode: "no-cors",
     headers: {
       "Content-Type": "application/json",
@@ -141,7 +142,7 @@ const displayOptionsToMove = (keyToken, id, title) => {
     .then((response) => {
       return response.status == 200 ? response.json() : null;
     }).then((files) => {
-      if (files.length > 0) {
+      if (files!= null && files.length > 0) {
         $("#content").append(`<div id="option">
       <b>${title} can move to:</b> </br></br>`)
         for (let file of files) {
@@ -164,6 +165,8 @@ const displayOptionsToMove = (keyToken, id, title) => {
 
               console.log("update dir: " + response.body);
               window.history.pushState({}, "", "/archive");
+              document.getElementById(`#move-btn-${file.id}`).style.visibility = 'hidden';
+
             })
           });
         }
