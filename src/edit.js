@@ -1,4 +1,3 @@
-// import 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap';
 import $ from "jquery";
 import { addUpdate } from "./sockets";
 import { serverAddress } from "./constants";
@@ -135,8 +134,6 @@ const initEdit = async (key) => {
 
     $("#save").on("click", () => {
       var content = $("textarea#text-area").val();
-      console.log($("textarea#text-area").val());
-      console.log("new content to saving:"+ content);
       if (content != null) {
         fetch(serverAddress + "/doc/save", {
           method: "POST",
@@ -181,20 +178,12 @@ const initEdit = async (key) => {
 
     input.on("input", (event) => {
       let end = input.prop("selectionEnd");
-
-      console.log("key.token:"+key.token);
-      console.log("history.state.token:"+history.state.token);
-      console.log("event.originalEvent.data:"+event.originalEvent.data);
-      console.log("history.state.id: "+history.state.id);
-
       addUpdate(
         key.token,
-        history.state.token,
         event.originalEvent.data,
         end - 1,
         startPos,
         endPos,
-        history.state.id,
         history.state.id
       );
     });
@@ -202,19 +191,20 @@ const initEdit = async (key) => {
 };
 
 const update = (updateData) => {
-  
-  // let textArea = $("#text-area");
-  // let start = textArea.prop("selectionStart");
-  // const urlParam = new URLSearchParams(window.location.search);
-  // const documentId = urlParam.get("id");
+  let textArea = $("#text-area");
+  let start = textArea.prop("selectionStart");
+  const urlParam = new URLSearchParams(window.location.search);
+  const documentId = urlParam.get("id");
 
-  // console.log("urlParam: " + urlParam);
-  // console.log("documentId: " + documentId);
-  // console.log("updateData.user: " + updateData.user);
-  // console.log("updateData.documentId: " + updateData.documentId);
-  // console.log("history.state.token: " + history.state.token);
+  console.log("urlParam: " + urlParam.entries);
+  console.log("documentId: " + documentId);
+  console.log("updateData.user: " + updateData.user);
+  console.log("updateData.documentId: " + updateData.documentId);
+  console.log("history.state.token: " + history.state.token);
 
-  // // console.log("updateData.user != history.state.token && updateData.documentId == documentId");
+  // console.log("updateData.user != history.state.token && updateData.documentId == documentId");
+  console.log(updateData.content);
+  textArea.val(updateData.content)
 
   // if (updateData.user != history.state.token && updateData.docId == history.state.id) {
   //   if (updateData.documentId == documentId) {
