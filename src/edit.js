@@ -22,7 +22,6 @@ const initEdit = async (key) => {
     })
     .then(async (data) => {
       if (data != null) {
-        console.log(data);
         fileName = data.fileName;
         document.getElementById("demo").innerHTML = fileName;
         if (data.fileContent != null) {
@@ -103,7 +102,6 @@ const initEdit = async (key) => {
 
     $("#save").on("click", () => {
       var content = $("textarea#text-area").val();
-
       if (content != null) {
         fetch(serverAddress + "/doc/save", {
           method: "POST",
@@ -166,7 +164,7 @@ const update = (updateData) => {
   const urlParam = new URLSearchParams(window.location.search);
   const documentId = urlParam.get("id");
 
-  console.log("urlParam: " + urlParam);
+  console.log("urlParam: " + urlParam.entries);
   console.log("documentId: " + documentId);
   console.log("updateData.user: " + updateData.user);
   console.log("updateData.documentId: " + updateData.documentId);
