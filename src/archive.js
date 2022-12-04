@@ -146,7 +146,7 @@ const displayOptionsToMove = (keyToken, id, title) => {
         $("#content").append(`<div id="option">
       <b>${title} can move to:</b> </br></br>`)
         for (let file of files) {
-          $("#content").append(`<button id="move-btn-${file.id}">${file.name}</button>`)
+          $("#content").append(`<button id="move-btn-${file.id}" style="height:40px;width:100px">${file.name}</button> &nbsp;&nbsp;&nbsp;`)
           console.log("move-btn-before-click");
 
           $(document).on("click", `#move-btn-${file.id}`, function () {

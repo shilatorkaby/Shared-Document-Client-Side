@@ -22,7 +22,6 @@ const initEdit = async (key) => {
     })
     .then(async (data) => {
       if (data != null) {
-        console.log(data);
         fileName = data.fileName;
         document.getElementById("demo").innerHTML = fileName;
         if (data.fileContent != null) {
@@ -31,6 +30,39 @@ const initEdit = async (key) => {
         console.log(data.fileContent);
       }
     });
+
+    var timeoutId;
+    $('#text-area').on('input propertychange change', function() {
+        console.log('Textarea Change');
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(function() {
+            // Runs 1 second (1000 ms) after the last change    
+            var content = $("textarea#text-area").val();
+            if (content != null) {
+              fetch(serverAddress + "/doc/save", {
+                method: "POST",
+                body: JSON.stringify({
+                  id: history.state.id,
+                  fileContent: content,
+                  email: $("#email").val()
+                }),
+                headers: {
+                  "Content-Type": "application/json",
+                  token: key.token,
+                },
+              }).then((response) => {
+                return response.status == 200 ? response.json() : null;
+              }).then(async (data) => {
+                if (data != null && data.fileContent != null) {
+                    console.log(data);
+                    console.log("display updated text back in doc: "+data.fileContent);
+                    $("#text-area").value = data.fileContent;
+                }
+              });
+            }   
+        }, 1000);
+    });
+
 
   $("#import").on("click", () => {
 
@@ -103,7 +135,6 @@ const initEdit = async (key) => {
 
     $("#save").on("click", () => {
       var content = $("textarea#text-area").val();
-
       if (content != null) {
         fetch(serverAddress + "/doc/save", {
           method: "POST",
@@ -166,7 +197,7 @@ const update = (updateData) => {
   const urlParam = new URLSearchParams(window.location.search);
   const documentId = urlParam.get("id");
 
-  console.log("urlParam: " + urlParam);
+  console.log("urlParam: " + urlParam.entries);
   console.log("documentId: " + documentId);
   console.log("updateData.user: " + updateData.user);
   console.log("updateData.documentId: " + updateData.documentId);
