@@ -10,9 +10,10 @@ let directoryId;
 let currentFile;
 
 const initArchive = async (key) => {
-  
-  directoryId = history.state.fid; 
-  
+
+
+  directoryId = history.state.fid;
+
   let objs;
 
   await fetch(serverAddress + "/doc/roles", {
@@ -22,19 +23,19 @@ const initArchive = async (key) => {
       token: key.token,
     },
   })
-  .then((response) => {
-    return response.status == 200 ? response.json() : null;
-  })
-  .then((data) => {
-    objs = data
-  });
+    .then((response) => {
+      return response.status == 200 ? response.json() : null;
+    })
+    .then((data) => {
+      objs = data
+    });
 
   let route = "/user/get/root/sub-files"
   let body = JSON.stringify({})
 
-  if(directoryId != null && history.state.title != null){
+  if (directoryId != null && history.state.title != null) {
     route = "/user/get/sub-files"
-    body = JSON.stringify({"id": directoryId, "name": history.state.title})
+    body = JSON.stringify({ "id": directoryId, "name": history.state.title })
   }
 
   fetch(serverAddress + route, {
@@ -50,14 +51,14 @@ const initArchive = async (key) => {
     })
     .then((files) => {
       $("#create-document").on("click", () => {
-        window.history.pushState({dirId :directoryId}, "", "/create-document");
+        window.history.pushState({ dirId: directoryId }, "", "/create-document");
         urlLocationHandler();
       });
       $("#create-directory").on("click", () => {
-          window.history.pushState({dirId :directoryId}, "", "/create-directory");
-          urlLocationHandler();
-        });
-     
+        window.history.pushState({ dirId: directoryId }, "", "/create-directory");
+        urlLocationHandler();
+      });
+
 
       if (files != null) {
         for (const file of files) {
@@ -71,52 +72,51 @@ const initArchive = async (key) => {
             $(`#edit-${file.id}`).on("click", async () => {
               const role = findRole(objs, file.docId);
 
-              if(role != "VIEWER"){
-                window.history.pushState({ token: key.token ,id: file.docId, title: file.name }, "", `/edit`);
+              if (role != "VIEWER") {
+                window.history.pushState({ token: key.token, id: file.docId, title: file.name }, "", `/edit`);
                 urlLocationHandler();
               }
-              else{
-                window.history.pushState({ token: key.token ,id: file.docId, title: file.name }, "", `/edit-viewer`);
+              else {
+                window.history.pushState({ token: key.token, id: file.docId, title: file.name }, "", `/edit-viewer`);
                 urlLocationHandler();
               }
-              
+
             });
           } else {
             $("#content").append(directoryHtml(file));
             // we add listeners for each button dynamically
             $(`#open-${file.id}`).on("click", async () => {
-              window.history.pushState({fid: file.id, title: file.name}, "", `/archive`);
+              window.history.pushState({ fid: file.id, title: file.name }, "", `/archive`);
               urlLocationHandler();
             });
           }
 
           // we add listeners for each button dynamically
           $(`#move-${file.id}`).on("click", async () => {
-            console.log(key.token,file.id);
-            displayOptionsToMove(key.token,file.id,file.name);
-            // window.history.pushState({fid: file.id}, "", `/edit`);
-            // urlLocationHandler();
+            console.log(key.token, file.id);
+            displayOptionsToMove(key.token, file.id, file.name);
           });
 
           $(`#delete-${file.id}`).on("click", async () => {
 
-              fetch(serverAddress + "/user/delete/dir", {
-                method: "POST",
-                body: JSON.stringify({
-                  id: file.id,
-                  fatherId : directoryId,
-                  docId : file.docId,
-                  name : file.name,
-                }),
-                headers: {
-                  "Content-Type": "application/json",
-                  token: key.token,
-                },
-              }).then((response) => {
-                console.log(response.body);
-                window.history.pushState({}, "", "/archive");
-              })
-             });
+            fetch(serverAddress + "/user/delete/dir", {
+              method: "POST",
+              body: JSON.stringify({
+                id: file.id,
+                fatherId: directoryId,
+                docId: file.docId,
+                name: file.name,
+              }),
+              headers: {
+                "Content-Type": "application/json",
+                token: key.token,
+              },
+            }).then((response) => {
+              console.log(response.body);
+              window.history.pushState({}, "", "/archive");
+            })
+          });
+
         }
       }
     });
@@ -126,12 +126,12 @@ const isDocument = (file) => {
   return file.docId != null ? true : false;
 };
 
-const displayOptionsToMove = (keyToken,id,title) =>{
-  console.log(keyToken,id);
+const displayOptionsToMove = (keyToken, id, title) => {
+  console.log(keyToken, id);
 
   fetch(serverAddress + "/user/get/optional/dir", {
     method: "POST",
-    body: JSON.stringify({"id": id}),
+    body: JSON.stringify({ "id": id }),
     // mode: "no-cors",
     headers: {
       "Content-Type": "application/json",
@@ -141,32 +141,37 @@ const displayOptionsToMove = (keyToken,id,title) =>{
     .then((response) => {
       return response.status == 200 ? response.json() : null;
     }).then((files) => {
-      let options ="";
-    if(files.length >0)
-     {for (let file of files)
-      {
-        options +=file.name;
-        options +=" ,";
-        console.log(file);
+      if (files.length > 0) {
+        $("#content").append(`<div id="option">
+      <b>${title} can move to:</b> </br></br>`)
+        for (let file of files) {
+          $("#content").append(`<button id="move-btn-${file.id}">${file.name}</button>`)
+          console.log("move-btn-before-click");
+
+          $(document).on("click", `#move-btn-${file.id}`, function () {
+            fetch(serverAddress + "/user/change/dir", {
+              method: "POST",
+              body: JSON.stringify({
+                id: id,
+                name: title,
+                fatherId: file.id,
+              }),
+              headers: {
+                "Content-Type": "application/json",
+                token: keyToken,
+              },
+            }).then((response) => {
+
+              console.log("update dir: " + response.body);
+              window.history.pushState({}, "", "/archive");
+            })
+          });
+        }
       }
-      options = options.substring(0,options.length-1)
-    }
-    
-    $("#content").append(optionalDirToMove(title,options));
-    
+
+
     });
-    getOptionalDir($("#content#move-dir"));
 
-};
-
-const getOptionalDir = (dirName) =>{
-  console.log(dirName.val() + "-> dirName");
-}
-
-const optionalDirToMove = (dirName,options) => {
-  return `<div id="option">
-           <b>${dirName} can move to:</b> </br> ${options} </br>
-           </div>`;
 };
 
 
@@ -196,8 +201,8 @@ const directoryHtml = (file) => {
 };
 
 const findRole = (objs, docId) => {
-  for(let obj of objs){
-    if(obj.docId == docId){
+  for (let obj of objs) {
+    if (obj.docId == docId) {
       return obj.role
     }
   }
