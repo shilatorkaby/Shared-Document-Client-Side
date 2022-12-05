@@ -11,7 +11,7 @@ const initRegister = () => {
 
     
     if (validateEmail(user.email)) {
-      if(validatePassword(user.password)){
+       if(validatePassword(user.password)){
       fetch(serverAddress + "/auth/register", {
         method: "POST",
         body: JSON.stringify({ email: user.email, password: user.password }),
@@ -19,14 +19,14 @@ const initRegister = () => {
           "Content-Type": "application/json",
         },
       }).then((response) => registerAlert(response));
-    }
+     }
     else{
-      document.getElementById("register-alert").innerHTML =
+      document.getElementById("validtion").innerHTML =
       "Password input is not valid!";
     }
   }
     else{
-      document.getElementById("register-alert").innerHTML =
+      document.getElementById("validtion").innerHTML =
       "Email input is not valid!";
     }
   });
@@ -35,7 +35,7 @@ const initRegister = () => {
 };
 
 function registerAlert(response) {
-  console.log(response.status);
+  console.log("hi:" +response.status);
   if (response.status == 200) {
     document.getElementById("register-alert").innerHTML =
       "Verification email has sent to your inbox";
