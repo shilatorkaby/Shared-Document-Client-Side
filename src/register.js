@@ -9,8 +9,9 @@ const initRegister = () => {
       password: $("#register-password").val(),
     };
 
-    // validateEmail(user.email) && validatePassword(user.password)
-    if (true) {
+    
+    if (validateEmail(user.email)) {
+      if(validatePassword(user.password)){
       fetch(serverAddress + "/auth/register", {
         method: "POST",
         body: JSON.stringify({ email: user.email, password: user.password }),
@@ -18,6 +19,15 @@ const initRegister = () => {
           "Content-Type": "application/json",
         },
       }).then((response) => registerAlert(response));
+    }
+    else{
+      document.getElementById("register-alert").innerHTML =
+      "Password input is not valid!";
+    }
+  }
+    else{
+      document.getElementById("register-alert").innerHTML =
+      "Email input is not valid!";
     }
   });
 
