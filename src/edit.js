@@ -31,64 +31,64 @@ const initEdit = async (key) => {
       }
     });
 
-    var timeoutId;
-    $('#text-area').on('input propertychange change', function() {
-        console.log('Textarea Change');
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(function() {
-            // Runs 1 second (1000 ms) after the last change    
-            var content = $("textarea#text-area").val();
-            if (content != null) {
-              fetch(serverAddress + "/doc/save", {
-                method: "POST",
-                body: JSON.stringify({
-                  id: history.state.id,
-                  fileContent: content,
-                  email: $("#email").val()
-                }),
-                headers: {
-                  "Content-Type": "application/json",
-                  token: key.token,
-                },
-              }).then((response) => {
-                return response.status == 200 ? response.json() : null;
-              }).then(async (data) => {
-                if (data != null && data.fileContent != null) {
-                    console.log(data);
-                    console.log("display updated text back in doc: "+data.fileContent);
-                    $("#text-area").value = data.fileContent;
-                }
-              });
-            }   
-        }, 1000);
-    });
-
+  var timeoutId;
+  $("#text-area").on("input propertychange change", function () {
+    console.log("Textarea Change");
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(function () {
+      // Runs 1 second (1000 ms) after the last change
+      var content = $("textarea#text-area").val();
+      if (content != null) {
+        fetch(serverAddress + "/doc/save", {
+          method: "POST",
+          body: JSON.stringify({
+            id: history.state.id,
+            fileContent: content,
+            email: $("#email").val(),
+          }),
+          headers: {
+            "Content-Type": "application/json",
+            token: key.token,
+          },
+        })
+          .then((response) => {
+            return response.status == 200 ? response.json() : null;
+          })
+          .then(async (data) => {
+            if (data != null && data.fileContent != null) {
+              console.log(data);
+              console.log(
+                "display updated text back in doc: " + data.fileContent
+              );
+              $("#text-area").value = data.fileContent;
+            }
+          });
+      }
+    }, 1000);
+  });
 
   $("#import").on("click", () => {
+    var inputFile = document.createElement("input");
+    inputFile.type = "file";
+    inputFile.onchange = (e) => {
+      // getting a hold of the file reference
+      var file = e.target.files[0];
 
-      var inputFile = document.createElement('input');
-      inputFile.type = 'file';
-      inputFile.onchange = e => { 
-    
-        // getting a hold of the file reference
-        var file = e.target.files[0]; 
-    
-        // setting up the reader
-        var reader = new FileReader();
-        reader.readAsText(file,'UTF-8');
-    
-        // here we tell the reader what to do when it's done reading...
-        reader.onload = readerEvent => {
-           var content = readerEvent.target.result; // this is the content!
-           console.log( content );
-           textAreaContent.value += '\n';
-           textAreaContent.value += content;
-        }
-    
-       }
-       inputFile.click();
-      });
-  
+      // setting up the reader
+      var reader = new FileReader();
+      reader.readAsText(file, "UTF-8");
+
+      // here we tell the reader what to do when it's done reading...
+      reader.onload = (readerEvent) => {
+        var content = readerEvent.target.result; // this is the content!
+        console.log(content);
+        textAreaContent.value += "\n";
+        textAreaContent.value += content;
+      };
+    };
+    inputFile.click();
+  });
+
   $("#export").on("click", () => {
     console.log("clicked");
     var message = $("textarea#text-area").val();
@@ -120,44 +120,48 @@ const initEdit = async (key) => {
             "Content-Type": "application/json",
             token: key.token,
           },
-        }).then((response) => {
-          return response.status == 200 ? response.json() : null;
         })
+          .then((response) => {
+            return response.status == 200 ? response.json() : null;
+          })
           .then(async (data) => {
             if (data != null) {
               console.log(data);
               console.log(data.fileContent);
             }
           });
-
       }
     });
 
     $("#save").on("click", () => {
       var content = $("textarea#text-area").val();
       console.log($("textarea#text-area").val());
-      console.log("new content to saving:"+ content);
+      console.log("new content to saving:" + content);
       if (content != null) {
         fetch(serverAddress + "/doc/save", {
           method: "POST",
           body: JSON.stringify({
             id: history.state.id,
             fileContent: content,
-            email: $("#email").val()
+            email: $("#email").val(),
           }),
           headers: {
             "Content-Type": "application/json",
             token: key.token,
           },
-        }).then((response) => {
-          return response.status == 200 ? response.json() : null;
-        }).then(async (data) => {
-          if (data != null && data.fileContent != null) {
+        })
+          .then((response) => {
+            return response.status == 200 ? response.json() : null;
+          })
+          .then(async (data) => {
+            if (data != null && data.fileContent != null) {
               console.log(data);
-              console.log("display updated text back in doc: "+data.fileContent);
+              console.log(
+                "display updated text back in doc: " + data.fileContent
+              );
               $("#text-area").value = data.fileContent;
-          }
-        });
+            }
+          });
       }
     });
 
@@ -169,12 +173,12 @@ const initEdit = async (key) => {
       if (key == 8 || key == 46) {
         console.log(
           "deleting: " +
-          input
-            .val()
-            .substring(
-              input.prop("selectionStart"),
-              input.prop("selectionEnd")
-            )
+            input
+              .val()
+              .substring(
+                input.prop("selectionStart"),
+                input.prop("selectionEnd")
+              )
         );
       }
     });
@@ -182,10 +186,10 @@ const initEdit = async (key) => {
     input.on("input", (event) => {
       let end = input.prop("selectionEnd");
 
-      console.log("key.token:"+key.token);
-      console.log("history.state.token:"+history.state.token);
-      console.log("event.originalEvent.data:"+event.originalEvent.data);
-      console.log("history.state.id: "+history.state.id);
+      console.log("key.token:" + key.token);
+      console.log("history.state.token:" + history.state.token);
+      console.log("event.originalEvent.data:" + event.originalEvent.data);
+      console.log("history.state.id: " + history.state.id);
 
       addUpdate(
         key.token,
@@ -194,48 +198,42 @@ const initEdit = async (key) => {
         startPos,
         endPos,
         history.state.id
-              );
+      );
     });
   });
 };
 
 const update = (updateData) => {
-  
   let textArea = $("#text-area");
   let start = textArea.prop("selectionStart");
-  const urlParam = new URLSearchParams(window.location.search);
-  const documentId = urlParam.get("id");
 
-  console.log("urlParam: " + urlParam);
-  console.log("documentId: " + documentId);
   console.log("updateData.user: " + updateData.user);
   console.log("updateData.documentId: " + updateData.documentId);
   console.log("history.state.token: " + history.state.token);
 
-  // console.log("updateData.user != history.state.token && updateData.documentId == documentId");
-
-  if (updateData.user != history.state.token && updateData.docId == history.state.id) {
-    if (updateData.documentId == documentId) {
-      let text = textArea.val();
-      if (updateData.content == null && updateData.startPos < updateData.endPos) {
-        text =
-          text.substring(0, updateData.startPos) +
-          text.substring(updateData.endPos, text.length);
-      } else if (updateData.content == null) {
-        text =
-          text.substring(0, updateData.position + 1) +
-          text.substring(updateData.position + 2, text.length);
-      } else {
-        text =
-          text.substring(0, updateData.position) +
-          updateData.content +
-          text.substring(updateData.position, text.length);
-      }
-      textArea.val(text);
-      if (updateData.position < start) {
-        start++;
-        textArea[0].setSelectionRange(start, start);
-      }
+  if (
+    updateData.user != history.state.token &&
+    updateData.docId == history.state.id
+  ) {
+    let text = textArea.val();
+    if (updateData.content == null && updateData.startPos < updateData.endPos) {
+      text =
+        text.substring(0, updateData.startPos) +
+        text.substring(updateData.endPos, text.length);
+    } else if (updateData.content == null) {
+      text =
+        text.substring(0, updateData.position + 1) +
+        text.substring(updateData.position + 2, text.length);
+    } else {
+      text =
+        text.substring(0, updateData.position) +
+        updateData.content +
+        text.substring(updateData.position, text.length);
+    }
+    textArea.val(text);
+    if (updateData.position < start) {
+      start++;
+      textArea[0].setSelectionRange(start, start);
     }
   }
 };
