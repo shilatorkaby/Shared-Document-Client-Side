@@ -30,7 +30,7 @@ const openConnection = () => {
 };
 
 
-const addUpdate = (token, content, position,startPos,endPos,docId) => {
+const addUpdate = (token,content, position,startPos,endPos,docId) => {
   sendUpate(token, "APPEND", content, position,startPos,endPos,docId)
 }
 const sendUpate = (user, type, content, position,startPos,endPos,docId) => {
