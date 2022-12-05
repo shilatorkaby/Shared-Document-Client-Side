@@ -30,23 +30,20 @@ const openConnection = () => {
 };
 
 
-const addUpdate = (sender, reciever, type, content, position,startPos,endPos, senderDocId, recieverDocId) => {
-  sendUpate(sender, reciever, "APPEND", content, position,startPos,endPos, senderDocId, recieverDocId)
+const addUpdate = (token, content, position,startPos,endPos,docId) => {
+  sendUpate(token, "APPEND", content, position,startPos,endPos,docId)
 }
-
-const sendUpate = (sender, reciever, type, content, position,startPos,endPos, senderDocId, recieverDocId) => {
-  // console.log(user + "sendUpdate");
+const sendUpate = (user, type, content, position,startPos,endPos,docId) => {
+  console.log(user + "sendUpdate");
   stompClient.send("/app/update", [], JSON.stringify({
-      sender: sender,
-      reciever: reciever,
+      user: user,
       type: type,
       content: content,
       position: position,
       startPos: startPos,
       endPos: endPos,
-      senderDocId : senderDocId,
-      recieverDocId : recieverDocId,
-  }))
+      docId: docId
+      }))
 }
 
 export { openConnection, addUpdate };

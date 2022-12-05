@@ -189,57 +189,55 @@ const initEdit = async (key) => {
 
       addUpdate(
         key.token,
-        history.state.token,
         event.originalEvent.data,
         end - 1,
         startPos,
         endPos,
-        history.state.id,
         history.state.id
-      );
+              );
     });
   });
 };
 
 const update = (updateData) => {
   
-  // let textArea = $("#text-area");
-  // let start = textArea.prop("selectionStart");
-  // const urlParam = new URLSearchParams(window.location.search);
-  // const documentId = urlParam.get("id");
+  let textArea = $("#text-area");
+  let start = textArea.prop("selectionStart");
+  const urlParam = new URLSearchParams(window.location.search);
+  const documentId = urlParam.get("id");
 
-  // console.log("urlParam: " + urlParam);
-  // console.log("documentId: " + documentId);
-  // console.log("updateData.user: " + updateData.user);
-  // console.log("updateData.documentId: " + updateData.documentId);
-  // console.log("history.state.token: " + history.state.token);
+  console.log("urlParam: " + urlParam);
+  console.log("documentId: " + documentId);
+  console.log("updateData.user: " + updateData.user);
+  console.log("updateData.documentId: " + updateData.documentId);
+  console.log("history.state.token: " + history.state.token);
 
-  // // console.log("updateData.user != history.state.token && updateData.documentId == documentId");
+  // console.log("updateData.user != history.state.token && updateData.documentId == documentId");
 
-  // if (updateData.user != history.state.token && updateData.docId == history.state.id) {
-  //   if (updateData.documentId == documentId) {
-  //     let text = textArea.val();
-  //     if (updateData.content == null && updateData.startPos < updateData.endPos) {
-  //       text =
-  //         text.substring(0, updateData.startPos) +
-  //         text.substring(updateData.endPos, text.length);
-  //     } else if (updateData.content == null) {
-  //       text =
-  //         text.substring(0, updateData.position + 1) +
-  //         text.substring(updateData.position + 2, text.length);
-  //     } else {
-  //       text =
-  //         text.substring(0, updateData.position) +
-  //         updateData.content +
-  //         text.substring(updateData.position, text.length);
-  //     }
-  //     textArea.val(text);
-  //     if (updateData.position < start) {
-  //       start++;
-  //       textArea[0].setSelectionRange(start, start);
-  //     }
-  //   }
-  // }
+  if (updateData.user != history.state.token && updateData.docId == history.state.id) {
+    if (updateData.documentId == documentId) {
+      let text = textArea.val();
+      if (updateData.content == null && updateData.startPos < updateData.endPos) {
+        text =
+          text.substring(0, updateData.startPos) +
+          text.substring(updateData.endPos, text.length);
+      } else if (updateData.content == null) {
+        text =
+          text.substring(0, updateData.position + 1) +
+          text.substring(updateData.position + 2, text.length);
+      } else {
+        text =
+          text.substring(0, updateData.position) +
+          updateData.content +
+          text.substring(updateData.position, text.length);
+      }
+      textArea.val(text);
+      if (updateData.position < start) {
+        start++;
+        textArea[0].setSelectionRange(start, start);
+      }
+    }
+  }
 };
 
 export { initEdit, update };
