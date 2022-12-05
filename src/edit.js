@@ -114,7 +114,7 @@ const initEdit = async (key) => {
           body: JSON.stringify({
             docId: history.state.id,
             email: $("#email").val(),
-            userRole: $('input[name="user-role"]:checked').val(),
+            userRole: $('input[name="user-role"]:checked').val().toUpperCase(),
           }),
           headers: {
             "Content-Type": "application/json",
@@ -199,10 +199,6 @@ const initEdit = async (key) => {
 const update = (updateData) => {
   let textArea = $("#text-area");
   let start = textArea.prop("selectionStart");
-
-  // console.log("updateData.user: " + updateData.user);
-  // console.log("updateData.documentId: " + updateData.documentId);
-  // console.log("history.state.token: " + history.state.token);
 
   if (
     updateData.user != history.state.token &&
